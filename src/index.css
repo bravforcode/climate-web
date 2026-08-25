@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @layer base {
   body {
-    background-color: #080c14;
-    color: #f1f5f9;
+    background-color: #f8fafc;
+    color: #0f172a;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -19,55 +19,55 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #080c14;
+    background: #f1f5f9;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1c2b42;
+    background: #cbd5e1;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #2b4162;
+    background: #94a3b8;
   }
 }
 
 @layer components {
+  /* Soft white card surface, replaces the old dark frosted-glass look */
   .glass-panel {
-    background: rgba(14, 22, 36, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06);
   }
 
   .glass-panel-interactive {
-    background: rgba(14, 22, 36, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-panel-interactive:hover {
-    background: rgba(21, 32, 51, 0.9);
-    border-color: rgba(16, 185, 129, 0.35);
-    box-shadow: 0 8px 30px -6px rgba(0, 0, 0, 0.45);
+    background: #ffffff;
+    border-color: #a7f3d0;
+    box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.10), 0 2px 6px -2px rgba(15, 23, 42, 0.06);
     transform: translateY(-1px);
   }
 
   .glass-pill {
-    background: rgba(10, 15, 26, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #e2e8f0;
   }
 
   .glass-inner-border {
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
   }
 
+  /* Soft ambient tint for hero/section backgrounds — subtle, not a dark gradient */
   .ambient-grid-bg {
-    background-image: 
+    background-image:
       radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.07) 0%, transparent 50%),
-      radial-gradient(circle at 80% 30%, rgba(6, 182, 212, 0.04) 0%, transparent 40%),
-      linear-gradient(to bottom, rgba(8, 12, 20, 0.98), #080c14);
+      radial-gradient(circle at 80% 25%, rgba(6, 182, 212, 0.04) 0%, transparent 45%),
+      linear-gradient(to bottom, #f8fafc, #f8fafc);
   }
 
   .telemetry-badge {

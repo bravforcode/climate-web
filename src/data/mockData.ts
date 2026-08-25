@@ -21,7 +21,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     titleEn: 'Community Member / Market Vendor',
     descriptionTh: 'เข้าถึงข้อมูลภาพรวมที่ได้รับการยืนยันและปกป้องความเป็นส่วนตัวแล้ว (k-anonymity)',
     descriptionEn: 'Views verified community aggregate telemetry with k-anonymity privacy protection.',
-    badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     privilegeLevel: 'verified-view',
     rlsConstraints: {
       fundingMatch: 'แสดงเฉพาะแหล่งทุนที่ Operator ตรวจสอบและยืนยันแล้ว (is_human_confirmed = true)',
@@ -36,7 +36,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     titleEn: 'Field Project Operator',
     descriptionTh: 'จัดการความเสี่ยง ร่างโครงการ ยืนยันคู่เทียบแหล่งทุน และบันทึกหลักฐานหน้างาน',
     descriptionEn: 'Full project drafting, risk curation, human-in-the-loop grant matching, and evidence capture.',
-    badgeColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+    badgeColor: 'bg-cyan-50 text-cyan-700 border-cyan-200',
     privilegeLevel: 'field-operator',
     rlsConstraints: {
       fundingMatch: 'เข้าถึงแหล่งทุนทุกสถานะ (รวมร่าง/ยังไม่ยืนยัน) และกด Human Verification ได้',
@@ -51,7 +51,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     titleEn: 'Municipal / District Officer',
     descriptionTh: 'ตรวจสอบความสอดคล้องกับผังเมือง ใบอนุญาต และการสนับสนุนโครงสร้างพื้นฐาน',
     descriptionEn: 'Verifies municipal compliance, permits, and cross-district resource allocation.',
-    badgeColor: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+    badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
     privilegeLevel: 'funder-review',
     rlsConstraints: {
       fundingMatch: 'ดูและรับรองโครงการที่ขอใช้พื้นที่สาธารณะหรือเงินอุดหนุนท้องถิ่น',
@@ -66,7 +66,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     titleEn: 'Climate Funder / Grant Provider',
     descriptionTh: 'พิจารณาข้อเสนอโครงการ ประเมิน Theory of Change และตรวจสอบ MRV ทางดิจิทัล',
     descriptionEn: 'Evaluates composed proposals, verified match criteria, and live MRV audit trail.',
-    badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
     privilegeLevel: 'funder-review',
     rlsConstraints: {
       fundingMatch: 'รับข้อเสนอโครงการที่ผ่านการยืนยันคุณสมบัติครบถ้วน',
@@ -81,7 +81,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     titleEn: 'Platform Administrator',
     descriptionTh: 'จัดการผู้ใช้งาน สิทธิ์ RLS บูรณาการ API ภายนอก (GISTDA, TMD) และตรวจสอบระบบ',
     descriptionEn: 'Manages user roles, RLS policies, external ingestion crons, and system health.',
-    badgeColor: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+    badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
     privilegeLevel: 'system-admin',
     rlsConstraints: {
       fundingMatch: 'จัดการ Master Directory ของแหล่งทุนและกฎหมายที่เกี่ยวข้อง',
@@ -96,7 +96,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     titleEn: 'Independent MRV Auditor',
     descriptionTh: 'สิทธิ์อ่านแบบสมบูรณ์เพื่อตรวจสอบความถูกต้องของห่วงโซ่หลักฐานและบัญชีห้ามแก้ไข',
     descriptionEn: 'Read-only comprehensive access to verify immutable ledger entries and cryptographic proofs.',
-    badgeColor: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+    badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
     privilegeLevel: 'compliance-audit',
     rlsConstraints: {
       fundingMatch: 'อ่านประวัติการตรวจสอบย้อนหลังทุกขั้นตอน (Audit Trail)',

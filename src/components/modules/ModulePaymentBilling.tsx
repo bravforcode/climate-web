@@ -203,41 +203,37 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
   });
 
   const content = (
-    <div className={`glass-panel rounded-3xl p-5 sm:p-7 border border-emerald-500/20 shadow-2xl relative overflow-hidden bg-gradient-to-b from-obsidian-900/90 via-obsidian-950/95 to-obsidian-950 ${
+    <div className={`glass-panel rounded-3xl p-5 sm:p-7 border border-slate-200 shadow-card-lg relative overflow-hidden bg-white ${
       isOpen ? 'w-full max-w-5xl max-h-[90vh] overflow-y-auto' : ''
     }`}>
-      
-      {/* Background ambient lighting */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Module Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200 relative z-10">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-mono text-xs text-emerald-700 font-bold uppercase tracking-wider">
               PAYMENT & BILLING · CSR & PHILANTHROPIC TIERS
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
             ร่วมสมทบทุนและสนับสนุนโครงการเพื่อสภาพภูมิอากาศ
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1">
+          <p className="text-xs sm:text-sm text-slate-600 mt-1">
             ระบบรับเงินสนับสนุนอัตโนมัติ พร้อมออกใบเสร็จลดหย่อนภาษี CSR และบันทึกเข้า Append-Only Ledger ทันที
           </p>
         </div>
 
         {/* Ledger Sync Status Pill & Modal Close */}
         <div className="flex items-center gap-2 self-start sm:self-center">
-          <div className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center gap-2 text-xs font-mono">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <div className="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center gap-2 text-xs font-mono">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
             <span>Stripe + Ledger Live ({ledgerSyncCount} Syncs)</span>
           </div>
           {isOpen && onClose && (
             <button
               onClick={onClose}
-              className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors"
+              className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               title="ปิดหน้าต่าง"
             >
               <X className="w-5 h-5" />
@@ -248,41 +244,41 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
       {/* Billing Interval Switcher */}
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 relative z-10">
-        <div className="flex items-center p-1 rounded-xl bg-obsidian-950 border border-white/10">
+        <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200">
           <button
             onClick={() => setBillingIntervalFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               billingIntervalFilter === 'all'
-                ? 'bg-emerald-500 text-obsidian-950 font-bold shadow'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-500 text-slate-900 font-bold shadow-sm'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             ทั้งหมด (All Tiers)
           </button>
           <button
             onClick={() => setBillingIntervalFilter('month')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               billingIntervalFilter === 'month'
-                ? 'bg-emerald-500 text-obsidian-950 font-bold shadow'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-500 text-slate-900 font-bold shadow-sm'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             รายเดือน (Monthly)
           </button>
           <button
             onClick={() => setBillingIntervalFilter('one_time')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               billingIntervalFilter === 'one_time'
-                ? 'bg-emerald-500 text-obsidian-950 font-bold shadow'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-500 text-slate-900 font-bold shadow-sm'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             สนับสนุนครั้งเดียว (One-Time)
           </button>
         </div>
 
-        <div className="text-xs text-slate-400 flex items-center gap-1.5">
-          <Info className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="text-xs text-slate-500 flex items-center gap-1.5">
+          <Info className="w-3.5 h-3.5 text-cyan-600" />
           <span>หักลดหย่อนภาษี CSR ได้ 2 เท่า ตามมาตรการส่งเสริมความยั่งยืน</span>
         </div>
       </div>
@@ -301,13 +297,13 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
               onClick={() => setSelectedTierId(tier.id)}
               className={`rounded-2xl p-5 border transition-all cursor-pointer flex flex-col justify-between relative ${
                 isSelected
-                  ? 'bg-emerald-950/40 border-emerald-500 ring-2 ring-emerald-500/30 shadow-lg shadow-emerald-950/50'
-                  : 'bg-obsidian-900/60 border-white/10 hover:border-white/20 hover:bg-obsidian-900/80'
+                  ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-200 shadow-card'
+                  : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'
               }`}
             >
               {/* Popular Badge */}
               {isPopular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 text-obsidian-950 text-[10px] font-extrabold font-mono uppercase tracking-wider shadow-md">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 text-white text-[10px] font-extrabold font-mono uppercase tracking-wider shadow-sm">
                   ★ MOST POPULAR
                 </div>
               )}
@@ -315,32 +311,32 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
               <div>
                 {/* Tier Title & Badge */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/10">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                     {tier.badgeTh}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[10px] font-mono text-slate-500">
                     {tier.interval === 'month' ? '/ เดือน' : 'ครั้งเดียว'}
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white mt-2 leading-snug">
+                <h3 className="text-base font-bold text-slate-900 mt-2 leading-snug">
                   {tier.nameEn}
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5 line-clamp-2">
+                <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">
                   {tier.descriptionTh}
                 </p>
 
                 {/* Price Display */}
-                <div className="mt-4 pb-3 border-b border-white/10">
+                <div className="mt-4 pb-3 border-b border-slate-200">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-2xl sm:text-3xl font-black font-mono text-white">
+                    <span className="text-2xl sm:text-3xl font-black font-mono text-slate-900">
                       ฿{displayAmount.toLocaleString()}
                     </span>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-slate-500">
                       {tier.interval === 'month' ? '/mo' : 'one-off'}
                     </span>
                   </div>
-                  <div className="mt-1 text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                  <div className="mt-1 text-[11px] text-emerald-700 font-medium flex items-center gap-1">
                     <Sparkles className="w-3 h-3 flex-shrink-0" />
                     <span>{tier.impactTh}</span>
                   </div>
@@ -349,7 +345,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                 {/* Custom Amount Controls */}
                 {tier.id === 'custom_grant' && (
                   <div className="mt-3 space-y-2">
-                    <label className="text-[10px] font-mono text-slate-300 block">
+                    <label className="text-[10px] font-mono text-slate-600 block">
                       ระบุยอดบริจาคตามต้องการ (บาท):
                     </label>
                     <input
@@ -358,7 +354,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                       step={1000}
                       value={customAmount}
                       onChange={(e) => setCustomAmount(Math.max(1000, Number(e.target.value) || 1000))}
-                      className="w-full px-2.5 py-1.5 rounded-lg bg-obsidian-950 border border-emerald-500/40 text-xs font-mono text-white text-right focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                      className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-emerald-300 text-xs font-mono text-slate-900 text-right focus:outline-none focus:ring-2 focus:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     />
                     <div className="grid grid-cols-3 gap-1">
                       {[10000, 25000, 100000].map((amt) => (
@@ -369,7 +365,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                             e.stopPropagation();
                             setCustomAmount(amt);
                           }}
-                          className="px-1.5 py-1 rounded bg-white/5 hover:bg-white/10 text-[10px] font-mono text-slate-300 text-center"
+                          className="px-1.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[10px] font-mono text-slate-600 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                         >
                           ฿{(amt / 1000).toFixed(0)}k
                         </button>
@@ -379,10 +375,10 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                 )}
 
                 {/* Feature List */}
-                <ul className="mt-3.5 space-y-2 text-[11px] text-slate-300">
+                <ul className="mt-3.5 space-y-2 text-[11px] text-slate-600">
                   {tier.featuresTh.slice(0, 4).map((feat, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
                       <span className="leading-tight">{feat}</span>
                     </li>
                   ))}
@@ -395,10 +391,10 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                   e.stopPropagation();
                   handleOpenCheckout(tier.id);
                 }}
-                className={`mt-5 w-full py-2.5 px-4 rounded-xl text-xs font-bold font-mono flex items-center justify-center gap-2 transition-all ${
+                className={`mt-5 w-full py-2.5 px-4 rounded-xl text-xs font-bold font-mono flex items-center justify-center gap-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                   isSelected
-                    ? 'bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 shadow-md'
-                    : 'bg-white/10 hover:bg-white/20 text-white'
+                    ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-900 shadow-sm'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                 }`}
               >
                 <span>ร่วมสนับสนุนทันที</span>
@@ -410,16 +406,16 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
       </div>
 
       {/* Real-Time Ledger Synchronization Banner */}
-      <div className="mt-6 p-4 rounded-2xl bg-obsidian-950/90 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+      <div className="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
-            <ShieldCheck className="w-5 h-5 text-emerald-400" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center flex-shrink-0">
+            <ShieldCheck className="w-5 h-5 text-emerald-600" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-white font-mono uppercase">
+            <h4 className="text-xs font-bold text-slate-900 font-mono uppercase">
               100% Append-Only Ledger Integrity
             </h4>
-            <p className="text-[11px] text-slate-400 mt-0.5">
+            <p className="text-[11px] text-slate-500 mt-0.5">
               ทุกยอดสนับสนุนผ่าน Stripe จะถูกส่งผ่าน Webhook เข้าสู่ฐานข้อมูลการเงินที่แก้ไขไม่ได้ (Immutable Ledger) ทันที
             </p>
           </div>
@@ -429,7 +425,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
           {activeReceipt && (
             <button
               onClick={() => setIsReceiptOpen(true)}
-              className="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono flex items-center gap-1.5 transition-all"
+              className="px-3 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 text-xs font-mono flex items-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>ดูใบเสร็จล่าสุด ({activeReceipt.receiptNumber})</span>
@@ -437,7 +433,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
           )}
           <button
             onClick={() => handleOpenCheckout()}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-obsidian-950 text-xs font-bold font-mono flex items-center gap-2 transition-all shadow-md ml-auto md:ml-0"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-900 text-xs font-bold font-mono flex items-center gap-2 transition-all shadow-sm ml-auto md:ml-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             <CreditCard className="w-4 h-4" />
             <span>เปิดหน้าชำระเงิน (Stripe Simulator)</span>
@@ -449,23 +445,23 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
       {/* 1. STRIPE CHECKOUT MODAL / DRAWER */}
       {/* ========================================================= */}
       {isCheckoutOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/85 backdrop-blur-md animate-in fade-in duration-150">
-          <div className="glass-panel w-full max-w-2xl rounded-3xl p-6 border border-emerald-500/30 shadow-2xl bg-obsidian-950 relative max-h-[90vh] overflow-y-auto">
-            
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="glass-panel w-full max-w-2xl rounded-3xl p-6 border border-slate-200 shadow-card-lg bg-white relative max-h-[90vh] overflow-y-auto">
+
             {/* Modal Close Button */}
             <button
               onClick={() => setIsCheckoutOpen(false)}
-              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center"
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             {/* Modal Header */}
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+            <div className="flex items-center gap-2 pb-3 border-b border-slate-200">
+              <div className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xs">
                 S
               </div>
-              <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
+              <span className="font-mono text-xs text-emerald-700 font-bold uppercase tracking-wider">
                 STRIPE CHECKOUT SIMULATOR · CLIMATE ACTION OS
               </span>
             </div>
@@ -473,19 +469,19 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
             {/* Checkout Content Based on Step */}
             {checkoutStep === 'form' && (
               <form onSubmit={handleStartPayment} className="mt-5 space-y-5">
-                
+
                 {/* Selected Tier Summary Header */}
-                <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between">
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] font-mono text-emerald-400 uppercase block">Selected Tier</span>
-                    <span className="text-sm font-bold text-white">{currentTier.nameEn}</span>
-                    <span className="text-xs text-slate-400 block mt-0.5">{currentTier.descriptionEn}</span>
+                    <span className="text-[10px] font-mono text-emerald-700 uppercase block">Selected Tier</span>
+                    <span className="text-sm font-bold text-slate-900">{currentTier.nameEn}</span>
+                    <span className="text-xs text-slate-500 block mt-0.5">{currentTier.descriptionEn}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-xl font-black font-mono text-emerald-300">
+                    <span className="text-xl font-black font-mono text-emerald-700">
                       ฿{effectiveAmount.toLocaleString()}
                     </span>
-                    <span className="text-[10px] font-mono text-slate-400 block">
+                    <span className="text-[10px] font-mono text-slate-500 block">
                       {currentTier.interval === 'month' ? 'per month' : 'one-time'}
                     </span>
                   </div>
@@ -493,29 +489,29 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
                 {/* Funder & Organization Details */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-mono text-slate-300 font-bold uppercase flex items-center gap-1.5">
-                    <Building className="w-3.5 h-3.5 text-cyan-400" />
+                  <h4 className="text-xs font-mono text-slate-600 font-bold uppercase flex items-center gap-1.5">
+                    <Building className="w-3.5 h-3.5 text-cyan-600" />
                     <span>ข้อมูลผู้สนับสนุน & องค์กร (Funder Info)</span>
                   </h4>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[11px] font-mono text-slate-400 block mb-1">ชื่อผู้บริจาค / ตัวแทน:</label>
+                      <label className="text-[11px] font-mono text-slate-500 block mb-1">ชื่อผู้บริจาค / ตัวแทน:</label>
                       <input
                         type="text"
                         value={funderName}
                         onChange={(e) => setFunderName(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-obsidian-900 border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                         required
                       />
                     </div>
                     <div>
-                      <label className="text-[11px] font-mono text-slate-400 block mb-1">อีเมลสำหรับรับใบเสร็จ:</label>
+                      <label className="text-[11px] font-mono text-slate-500 block mb-1">อีเมลสำหรับรับใบเสร็จ:</label>
                       <input
                         type="email"
                         value={funderEmail}
                         onChange={(e) => setFunderEmail(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-obsidian-900 border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                         required
                       />
                     </div>
@@ -523,21 +519,21 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[11px] font-mono text-slate-400 block mb-1">ชื่อนิติบุคคล / องค์กร CSR (ถ้ามี):</label>
+                      <label className="text-[11px] font-mono text-slate-500 block mb-1">ชื่อนิติบุคคล / องค์กร CSR (ถ้ามี):</label>
                       <input
                         type="text"
                         value={organizationName}
                         onChange={(e) => setOrganizationName(e.target.value)}
                         placeholder="เช่น SCG Foundation Ltd."
-                        className="w-full px-3 py-2 rounded-xl bg-obsidian-900 border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       />
                     </div>
                     <div>
-                      <label className="text-[11px] font-mono text-slate-400 block mb-1">โครงการเป้าหมาย:</label>
+                      <label className="text-[11px] font-mono text-slate-500 block mb-1">โครงการเป้าหมาย:</label>
                       <select
                         value={selectedProject}
                         onChange={(e) => setSelectedProject(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-obsidian-900 border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       >
                         <option value="proj-pilot-market-01">ตลาดสดนำร่องลดความร้อนและจัดการขยะ (Bangkok)</option>
                         <option value="proj-school-pm25-02">โรงเรียนปลอดฝุ่น PM2.5 (Chiang Mai)</option>
@@ -550,7 +546,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                 {/* Payment Method Selector */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-mono text-slate-300 font-bold uppercase flex items-center gap-1.5">
+                    <h4 className="text-xs font-mono text-slate-600 font-bold uppercase flex items-center gap-1.5">
                       <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
                       <span>ช่องทางชำระเงิน (Payment Method)</span>
                     </h4>
@@ -558,7 +554,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                       <button
                         type="button"
                         onClick={handleFillTestCard}
-                        className="text-[10px] font-mono text-cyan-400 hover:underline flex items-center gap-1"
+                        className="text-[10px] font-mono text-cyan-700 hover:underline flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded"
                       >
                         <Zap className="w-3 h-3" />
                         <span>Autofill Test Card</span>
@@ -571,10 +567,10 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('credit_card')}
-                      className={`p-3 rounded-xl border flex items-center justify-center gap-2 text-xs font-medium transition-all ${
+                      className={`p-3 rounded-xl border flex items-center justify-center gap-2 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                         paymentMethod === 'credit_card'
-                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
-                          : 'bg-obsidian-900 border-white/10 text-slate-400 hover:text-white'
+                          ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
+                          : 'bg-white border-slate-200 text-slate-500 hover:text-slate-900'
                       }`}
                     >
                       <CreditCard className="w-4 h-4" />
@@ -583,10 +579,10 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('promptpay')}
-                      className={`p-3 rounded-xl border flex items-center justify-center gap-2 text-xs font-medium transition-all ${
+                      className={`p-3 rounded-xl border flex items-center justify-center gap-2 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                         paymentMethod === 'promptpay'
-                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
-                          : 'bg-obsidian-900 border-white/10 text-slate-400 hover:text-white'
+                          ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
+                          : 'bg-white border-slate-200 text-slate-500 hover:text-slate-900'
                       }`}
                     >
                       <QrCode className="w-4 h-4" />
@@ -596,15 +592,15 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
                   {/* Credit Card Input Form */}
                   {paymentMethod === 'credit_card' && (
-                    <div className="p-4 rounded-2xl bg-obsidian-900/80 border border-white/10 space-y-3">
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                       <div>
-                        <label className="text-[10px] font-mono text-slate-400 block mb-1">Card Number:</label>
+                        <label className="text-[10px] font-mono text-slate-500 block mb-1">Card Number:</label>
                         <div className="relative">
                           <input
                             type="text"
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value)}
-                            className="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/10 text-xs font-mono text-white pl-9"
+                            className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-900 pl-9 focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                             required
                           />
                           <CreditCard className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -613,33 +609,33 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         <div>
-                          <label className="text-[10px] font-mono text-slate-400 block mb-1">Expiry (MM/YY):</label>
+                          <label className="text-[10px] font-mono text-slate-500 block mb-1">Expiry (MM/YY):</label>
                           <input
                             type="text"
                             value={cardExpiry}
                             onChange={(e) => setCardExpiry(e.target.value)}
-                            className="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/10 text-xs font-mono text-white text-center"
+                            className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-900 text-center focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                             required
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-mono text-slate-400 block mb-1">CVC / CVV:</label>
+                          <label className="text-[10px] font-mono text-slate-500 block mb-1">CVC / CVV:</label>
                           <input
                             type="password"
                             value={cardCvc}
                             maxLength={4}
                             onChange={(e) => setCardCvc(e.target.value)}
-                            className="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/10 text-xs font-mono text-white text-center"
+                            className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-900 text-center focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                             required
                           />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
-                          <label className="text-[10px] font-mono text-slate-400 block mb-1">Cardholder Name:</label>
+                          <label className="text-[10px] font-mono text-slate-500 block mb-1">Cardholder Name:</label>
                           <input
                             type="text"
                             value={cardName}
                             onChange={(e) => setCardName(e.target.value)}
-                            className="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/10 text-xs font-mono text-white uppercase"
+                            className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-900 uppercase focus:outline-none focus:border-emerald-500 focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                             required
                           />
                         </div>
@@ -649,9 +645,9 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
                   {/* PromptPay QR Mock Display */}
                   {paymentMethod === 'promptpay' && (
-                    <div className="p-4 rounded-2xl bg-obsidian-900/80 border border-white/10 flex flex-col sm:flex-row items-center gap-4">
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center gap-4">
                       {/* Realistic SVG QR Mock */}
-                      <div className="w-36 h-36 bg-white p-2 rounded-xl flex flex-col items-center justify-center flex-shrink-0 shadow-lg">
+                      <div className="w-36 h-36 bg-white p-2 rounded-xl flex flex-col items-center justify-center flex-shrink-0 shadow-card border border-slate-200">
                         <div className="w-full text-center text-[8px] font-bold text-blue-900 font-mono tracking-tighter">
                           PROMPTPAY QR
                         </div>
@@ -669,11 +665,11 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                       </div>
 
                       <div className="flex-1 space-y-1.5 text-center sm:text-left">
-                        <div className="text-xs font-bold text-white">สแกนด้วย Mobile Banking ทุกธนาคาร</div>
-                        <div className="text-[11px] text-slate-400">
-                          ยอดชำระ: <span className="font-mono text-emerald-400 font-bold">฿{effectiveAmount.toLocaleString()}</span>
+                        <div className="text-xs font-bold text-slate-900">สแกนด้วย Mobile Banking ทุกธนาคาร</div>
+                        <div className="text-[11px] text-slate-500">
+                          ยอดชำระ: <span className="font-mono text-emerald-700 font-bold">฿{effectiveAmount.toLocaleString()}</span>
                         </div>
-                        <div className="text-[10px] font-mono text-amber-400 flex items-center justify-center sm:justify-start gap-1">
+                        <div className="text-[10px] font-mono text-amber-700 flex items-center justify-center sm:justify-start gap-1">
                           <Clock className="w-3 h-3" />
                           <span>QR จะหมดอายุใน: {formatTimer(qrTimeRemaining)}</span>
                         </div>
@@ -686,10 +682,10 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                 </div>
 
                 {/* Submit / Action Bar */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
                   <div className="text-left">
-                    <span className="text-[10px] font-mono text-slate-400 block">Total Contribution</span>
-                    <span className="text-lg font-black font-mono text-white">
+                    <span className="text-[10px] font-mono text-slate-500 block">Total Contribution</span>
+                    <span className="text-lg font-black font-mono text-slate-900">
                       ฿{effectiveAmount.toLocaleString()} THB
                     </span>
                   </div>
@@ -698,13 +694,13 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                     <button
                       type="button"
                       onClick={() => setIsCheckoutOpen(false)}
-                      className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white"
+                      className="px-4 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500"
                     >
                       ยกเลิก
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 font-bold font-mono text-xs flex items-center gap-2 shadow-lg transition-all"
+                      className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold font-mono text-xs flex items-center gap-2 shadow-card transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2"
                     >
                       <Lock className="w-3.5 h-3.5" />
                       <span>ยืนยันชำระ ฿{effectiveAmount.toLocaleString()}</span>
@@ -718,9 +714,9 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
             {/* Step: Processing */}
             {checkoutStep === 'processing' && (
               <div className="py-12 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full border-4 border-emerald-500/20 border-t-emerald-400 animate-spin mx-auto" />
-                <h3 className="text-base font-bold text-white">กำลังประมวลผลการชำระเงิน</h3>
-                <p className="text-xs font-mono text-emerald-400 animate-pulse">
+                <div className="w-16 h-16 rounded-full border-4 border-emerald-100 border-t-emerald-500 animate-spin mx-auto" />
+                <h3 className="text-base font-bold text-slate-900">กำลังประมวลผลการชำระเงิน</h3>
+                <p className="text-xs font-mono text-emerald-700 animate-pulse">
                   {processingMessage}
                 </p>
                 <div className="text-[10px] text-slate-500 max-w-sm mx-auto">
@@ -732,34 +728,34 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
             {/* Step: Success */}
             {checkoutStep === 'success' && activeSession && activeWebhookResult && (
               <div className="py-8 text-center space-y-4 animate-in zoom-in-95 duration-200">
-                <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+                <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-black text-white">การชำระเงินสำเร็จสมบูรณ์!</h3>
-                  <p className="text-xs text-slate-300 mt-1">
+                  <h3 className="text-lg font-black text-slate-900">การชำระเงินสำเร็จสมบูรณ์!</h3>
+                  <p className="text-xs text-slate-500 mt-1">
                     ขอบพระคุณสำหรับเงินสนับสนุนโครงการ Climate Action OS
                   </p>
                 </div>
 
                 {/* Sync Confirmation Card */}
-                <div className="p-4 rounded-2xl bg-obsidian-900 border border-emerald-500/30 text-left space-y-2 max-w-md mx-auto">
-                  <div className="flex items-center justify-between text-xs pb-2 border-b border-white/10">
-                    <span className="text-slate-400">เลขที่ใบเสร็จรับเงิน:</span>
-                    <span className="font-mono font-bold text-emerald-400">{activeWebhookResult.receiptNumber}</span>
+                <div className="p-4 rounded-2xl bg-slate-50 border border-emerald-200 text-left space-y-2 max-w-md mx-auto">
+                  <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-200">
+                    <span className="text-slate-500">เลขที่ใบเสร็จรับเงิน:</span>
+                    <span className="font-mono font-bold text-emerald-700">{activeWebhookResult.receiptNumber}</span>
                   </div>
-                  <div className="flex items-center justify-between text-xs pb-2 border-b border-white/10">
-                    <span className="text-slate-400">Stripe Payment Intent:</span>
-                    <span className="font-mono text-slate-300">{formatShortHash(activeSession.stripePaymentIntentId, 10, 6)}</span>
+                  <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-200">
+                    <span className="text-slate-500">Stripe Payment Intent:</span>
+                    <span className="font-mono text-slate-600">{formatShortHash(activeSession.stripePaymentIntentId, 10, 6)}</span>
                   </div>
-                  <div className="flex items-center justify-between text-xs pb-2 border-b border-white/10">
-                    <span className="text-slate-400">Ledger Entry ID:</span>
-                    <span className="font-mono text-cyan-400 font-bold">{activeWebhookResult.ledgerEntry.id}</span>
+                  <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-200">
+                    <span className="text-slate-500">Ledger Entry ID:</span>
+                    <span className="font-mono text-cyan-700 font-bold">{activeWebhookResult.ledgerEntry.id}</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400">Ledger Status:</span>
-                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                    <span className="text-slate-500">Ledger Status:</span>
+                    <span className="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                       APPENDED & IMMUTABLE
                     </span>
                   </div>
@@ -771,14 +767,14 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
                       setIsCheckoutOpen(false);
                       setIsReceiptOpen(true);
                     }}
-                    className="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-obsidian-950 font-bold font-mono text-xs flex items-center gap-1.5 shadow"
+                    className="px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-bold font-mono text-xs flex items-center gap-1.5 shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2"
                   >
                     <FileText className="w-3.5 h-3.5" />
                     <span>ดูและพิมพ์ใบเสร็จ (Tax Receipt PDF)</span>
                   </button>
                   <button
                     onClick={() => setIsCheckoutOpen(false)}
-                    className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs"
+                    className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2"
                   >
                     กลับสู่แดชบอร์ด
                   </button>
@@ -794,28 +790,28 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
       {/* 2. DOWNLOADABLE PDF / OFFICIAL RECEIPT SIMULATOR MODAL */}
       {/* ========================================================= */}
       {isReceiptOpen && activeReceipt && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/85 backdrop-blur-md animate-in fade-in duration-150">
-          <div className="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl bg-slate-900 text-slate-900 relative max-h-[95vh] overflow-y-auto">
-            
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-card-lg bg-white text-slate-900 relative max-h-[95vh] overflow-y-auto">
+
             {/* Modal Controls */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-700">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-emerald-400" />
-                <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
+                <FileText className="w-5 h-5 text-emerald-600" />
+                <span className="text-xs font-mono font-bold text-emerald-700 uppercase tracking-wider">
                   OFFICIAL DONATION RECEIPT & TAX INVOICE
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrintReceipt}
-                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono flex items-center gap-1.5 transition-all shadow"
+                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-mono flex items-center gap-1.5 transition-all shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span>พิมพ์ / Save PDF</span>
                 </button>
                 <button
                   onClick={() => setIsReceiptOpen(false)}
-                  className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center"
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -928,7 +924,7 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
   if (isOpen) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-obsidian-950/85 backdrop-blur-xl animate-in fade-in duration-200">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
         {content}
       </div>
     );

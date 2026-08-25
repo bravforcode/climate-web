@@ -83,21 +83,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
       
       {/* Workspace Stage Selector Navigation */}
       <div className="mb-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-slate-200">
           <div>
-            <span className="text-xs font-mono text-climate-400 font-bold uppercase tracking-wider block">
+            <span className="text-xs font-mono text-climate-600 font-bold uppercase tracking-wider block">
               WORKFLOW WORKSPACES · กระบวนการทำงานแบบบูรณาการ
             </span>
-            <h2 className="text-xl sm:text-3xl font-black text-white mt-1">
+            <h2 className="text-xl sm:text-3xl font-black text-slate-900 mt-1">
               {currentWorkspaceMeta.title}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl">
               {currentWorkspaceMeta.subtitle}
             </p>
           </div>
 
           {/* Quick Stage Tabs */}
-          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-obsidian-900 border border-white/10 w-full sm:w-auto overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 border border-slate-200 w-full sm:w-auto overflow-x-auto scrollbar-none">
             {workspaces.map((ws) => {
               const Icon = ws.icon;
               const isActive = activeWorkspace === ws.id;
@@ -105,10 +105,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
                 <button
                   key={ws.id}
                   onClick={() => onSelectWorkspace(ws.id)}
-                  className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
+                  className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                     isActive
-                      ? 'bg-climate-500 text-obsidian-950 shadow-subtle-emerald font-bold'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                      ? 'bg-white text-climate-700 shadow-sm font-bold'
+                      : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/60'
                   }`}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
@@ -154,14 +154,14 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
             </div>
 
             {/* Stage Completion Footer Banner */}
-            <div className="p-4 rounded-2xl glass-panel border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-climate-400 flex-shrink-0" />
+            <div className="p-4 rounded-2xl glass-panel border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2 text-slate-600">
+                <CheckCircle2 className="w-4 h-4 text-climate-600 flex-shrink-0" />
                 <span>เลือกมาตรการแล้ว <strong>{selectedInterventions.length} รายการ</strong> พร้อมสำหรับร่างโครงการ</span>
               </div>
               <button
                 onClick={() => onSelectWorkspace('compose')}
-                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-climate-500/20 hover:bg-climate-500/30 text-climate-300 border border-climate-500/40 font-semibold flex items-center justify-center gap-1.5 transition-all"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-climate-50 hover:bg-climate-100 text-climate-700 border border-climate-200 font-semibold flex items-center justify-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 <span>ไปยังขั้นตอนถัดไป: ร่างโครงการ & เทียบเคียงทุน</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -190,21 +190,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
             </div>
 
             {/* Stage Completion Footer Banner */}
-            <div className="p-4 rounded-2xl glass-panel border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2 text-slate-300">
-                <FileText className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+            <div className="p-4 rounded-2xl glass-panel border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2 text-slate-600">
+                <FileText className="w-4 h-4 text-cyan-600 flex-shrink-0" />
                 <span>ร่างข้อเสนอโครงการเสร็จสมบูรณ์ พร้อมส่งให้ผู้แทนกองทุนพิจารณา</span>
               </div>
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   onClick={onOpenProposalModal}
-                  className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 font-medium transition-all"
+                  className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   ดูเอกสารข้อเสนอ (PDF/MD)
                 </button>
                 <button
                   onClick={() => onSelectWorkspace('mrv')}
-                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-climate-500/20 hover:bg-climate-500/30 text-climate-300 border border-climate-500/40 font-semibold flex items-center justify-center gap-1.5 transition-all"
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-climate-50 hover:bg-climate-100 text-climate-700 border border-climate-200 font-semibold flex items-center justify-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <span>ไปยังขั้นตอน: ปฏิบัติการ & บันทึกหลักฐาน</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -235,21 +235,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
 
             {/* CSR Sponsorship Banner */}
             {onOpenSponsorModal && (
-              <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-obsidian-900 to-obsidian-900 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+              <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 flex-shrink-0">
+                  <div className="p-2.5 rounded-xl bg-white text-amber-600 border border-amber-200 flex-shrink-0">
                     <Coins className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">ต้องการร่วมสมทบทุนขยายผลโครงการ?</h4>
-                    <p className="text-slate-300 text-[11px] mt-0.5">
+                    <h4 className="text-sm font-bold text-slate-900">ต้องการร่วมสมทบทุนขยายผลโครงการ?</h4>
+                    <p className="text-slate-600 text-[11px] mt-0.5">
                       ภาคเอกชนสามารถร่วมสนับสนุนโครงการปรับตัวสภาพภูมิอากาศชุมชน เพื่อรับสิทธิประโยชน์ลดหย่อนภาษี 2 เท่า พร้อมใบเสร็จดิจิทัล
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={onOpenSponsorModal}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-obsidian-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-subtle-emerald flex-shrink-0"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>เปิดระบบร่วมสมทบทุน (CSR 2x)</span>

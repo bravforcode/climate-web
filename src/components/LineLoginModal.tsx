@@ -170,52 +170,52 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
   const getRoleBadgeColor = (role: UserRole) => {
     switch (role) {
       case 'community_member':
-        return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'local_officer':
-        return 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30';
+        return 'bg-cyan-50 text-cyan-700 border-cyan-200';
       case 'operator':
-        return 'bg-purple-500/10 text-purple-300 border-purple-500/30';
+        return 'bg-purple-50 text-purple-700 border-purple-200';
       case 'funder':
-        return 'bg-amber-500/10 text-amber-300 border-amber-500/30';
+        return 'bg-amber-50 text-amber-700 border-amber-200';
       case 'auditor':
-        return 'bg-rose-500/10 text-rose-300 border-rose-500/30';
+        return 'bg-rose-50 text-rose-700 border-rose-200';
       case 'admin':
-        return 'bg-blue-500/10 text-blue-300 border-blue-500/30';
+        return 'bg-blue-50 text-blue-700 border-blue-200';
       default:
-        return 'bg-white/10 text-slate-300 border-white/10';
+        return 'bg-slate-100 text-slate-600 border-slate-200';
     }
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-      {/* Dark backdrop overlay with blur */}
+      {/* Dark backdrop scrim overlay */}
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-4xl rounded-3xl bg-obsidian-950/95 border border-white/15 shadow-[0_0_50px_rgba(6,199,85,0.15)] overflow-hidden z-10 flex flex-col max-h-[92vh]">
-        
+      <div className="relative w-full max-w-4xl rounded-3xl bg-white border border-slate-200 shadow-card-lg overflow-hidden z-10 flex flex-col max-h-[92vh]">
+
         {/* Top Header Bar */}
-        <div className="px-5 sm:px-8 py-5 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-obsidian-900 via-obsidian-950 to-obsidian-900">
+        <div className="px-5 sm:px-8 py-5 border-b border-slate-200 flex items-center justify-between bg-white">
           <div className="flex items-center gap-3">
             {/* Official LINE Green Icon */}
-            <div className="w-10 h-10 rounded-2xl bg-[#06C755] flex items-center justify-center shadow-lg shadow-[#06C755]/20 flex-shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-[#06C755] flex items-center justify-center shadow-sm flex-shrink-0">
               <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
                 <path d="M12 2C6.48 2 2 5.82 2 10.53c0 4.22 3.59 7.74 8.44 8.41.33.07.78.22.89.5.1.25.07.65.03.9-.06.4-.3 1.83-.34 2.1-.06.38.17.37.38.23.21-.14 3.39-2.03 4.63-2.77.34-.2.68-.26 1.07-.26C19.95 19.64 22 16.14 22 10.53 22 5.82 17.52 2 12 2z" />
               </svg>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                   {lineUser ? 'LINE Identity & Profile Session' : 'LINE Login & OIDC Identity Gate'}
                 </h2>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-[#06C755]/15 text-[#06C755] border border-[#06C755]/30">
                   OpenID Connect v2.1
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500">
                 ระบบยืนยันตัวตนสำหรับชุมชน เจ้าหน้าที่ และผู้ตรวจสอบกองทุนสภาพภูมิอากาศ (PDPA Compliant)
               </p>
             </div>
@@ -223,7 +223,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             title="ปิดหน้าต่าง"
           >
             <X className="w-5 h-5" />
@@ -231,13 +231,13 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
         </div>
 
         {/* Tab Navigation */}
-        <div className="px-5 sm:px-8 pt-3 bg-obsidian-900/60 border-b border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <div className="px-5 sm:px-8 pt-3 bg-slate-50 border-b border-slate-200 flex items-center gap-2 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab('profiles')}
-            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 ${
+            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               activeTab === 'profiles'
-                ? 'text-[#06C755] border-[#06C755] bg-white/5 shadow-[inset_0_-2px_8px_rgba(6,199,85,0.2)]'
-                : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-white/5'
+                ? 'text-[#06C755] border-[#06C755] bg-white'
+                : 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <UserCheck className="w-4 h-4" />
@@ -249,10 +249,10 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
 
           <button
             onClick={() => setActiveTab('qr')}
-            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 ${
+            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               activeTab === 'qr'
-                ? 'text-[#06C755] border-[#06C755] bg-white/5 shadow-[inset_0_-2px_8px_rgba(6,199,85,0.2)]'
-                : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-white/5'
+                ? 'text-[#06C755] border-[#06C755] bg-white'
+                : 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <QrCode className="w-4 h-4" />
@@ -261,10 +261,10 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
 
           <button
             onClick={() => setActiveTab('oauth')}
-            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 ${
+            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               activeTab === 'oauth'
-                ? 'text-[#06C755] border-[#06C755] bg-white/5 shadow-[inset_0_-2px_8px_rgba(6,199,85,0.2)]'
-                : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-white/5'
+                ? 'text-[#06C755] border-[#06C755] bg-white'
+                : 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <ExternalLink className="w-4 h-4" />
@@ -273,13 +273,13 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
 
           <button
             onClick={() => setActiveTab('pdpa')}
-            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 ${
+            className={`px-3.5 py-2 rounded-t-xl text-xs font-semibold flex items-center gap-2 transition-all border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
               activeTab === 'pdpa'
-                ? 'text-[#06C755] border-[#06C755] bg-white/5 shadow-[inset_0_-2px_8px_rgba(6,199,85,0.2)]'
-                : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-white/5'
+                ? 'text-[#06C755] border-[#06C755] bg-white'
+                : 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 text-cyan-400" />
+            <ShieldCheck className="w-4 h-4 text-cyan-600" />
             <span>PDPA & STRIDE Security</span>
           </button>
         </div>
@@ -290,16 +290,16 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
           {/* TAB 1: QUICK 1-CLICK DEMO PROFILES */}
           {activeTab === 'profiles' && (
             <div className="space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded-2xl bg-obsidian-900/80 border border-white/10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
                 <div className="flex items-center gap-2.5">
-                  <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                  <p className="text-xs text-slate-300">
+                  <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                  <p className="text-xs text-slate-600">
                     เลือกโปรไฟล์ทดสอบเพื่อจำลองสิทธิ์การใช้งานจริงตามบทบาท (RLS Context & Consent Gate)
                   </p>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
+                <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500">
                   <span>State:</span>
-                  <code className="px-1.5 py-0.5 rounded bg-black/40 text-emerald-400 border border-white/10 truncate max-w-[120px]">
+                  <code className="px-1.5 py-0.5 rounded bg-slate-100 text-emerald-700 border border-slate-200 truncate max-w-[120px]">
                     {stateToken}
                   </code>
                 </div>
@@ -317,8 +317,8 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                       onClick={() => setSelectedProfileId(profile.id)}
                       className={`group relative p-4 rounded-2xl border transition-all cursor-pointer text-left flex flex-col justify-between ${
                         isSelected
-                          ? 'bg-[#06C755]/10 border-[#06C755] shadow-[0_0_20px_rgba(6,199,85,0.15)] ring-1 ring-[#06C755]/50'
-                          : 'bg-obsidian-900/70 border-white/10 hover:border-white/25 hover:bg-obsidian-900'
+                          ? 'bg-climate-50 border-[#06C755] ring-1 ring-[#06C755]/40'
+                          : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                       }`}
                     >
                       <div className="flex items-start gap-3.5">
@@ -326,16 +326,16 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                           <img
                             src={profile.pictureUrl}
                             alt={profile.displayName}
-                            className="w-12 h-12 rounded-xl object-cover border border-white/10 group-hover:scale-105 transition-transform"
+                            className="w-12 h-12 rounded-xl object-cover border border-slate-200 group-hover:scale-105 transition-transform"
                           />
-                          <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#06C755] border-2 border-obsidian-950 flex items-center justify-center">
+                          <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#06C755] border-2 border-white flex items-center justify-center">
                             <Check className="w-2.5 h-2.5 text-white" />
                           </span>
                         </div>
 
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-1.5 mb-1">
-                            <h4 className="text-xs sm:text-sm font-bold text-white truncate">
+                            <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
                               {profile.displayName}
                             </h4>
                           </div>
@@ -344,7 +344,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                             <span className={`px-2 py-0.5 rounded text-[10px] font-mono border ${roleBadge}`}>
                               {profile.role}
                             </span>
-                            <span className="text-[11px] text-slate-400 truncate max-w-[160px]">
+                            <span className="text-[11px] text-slate-500 truncate max-w-[160px]">
                               {profile.organizationName?.split(' ')[0]}
                             </span>
                           </div>
@@ -354,8 +354,8 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                             <span
                               className={`px-1.5 py-0.2 rounded border ${
                                 profile.consents.evidence_capture
-                                  ? 'bg-emerald-950/40 text-emerald-400 border-emerald-500/30'
-                                  : 'bg-rose-950/40 text-rose-400 border-rose-500/30'
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                  : 'bg-rose-50 text-rose-700 border-rose-200'
                               }`}
                               title="ความยินยอมบันทึกภาพถ่ายและหลักฐานหน้างาน (MRV Evidence)"
                             >
@@ -364,8 +364,8 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                             <span
                               className={`px-1.5 py-0.2 rounded border ${
                                 profile.consents.vulnerability_data
-                                  ? 'bg-cyan-950/40 text-cyan-400 border-cyan-500/30'
-                                  : 'bg-rose-950/40 text-rose-400 border-rose-500/30'
+                                  ? 'bg-cyan-50 text-cyan-700 border-cyan-200'
+                                  : 'bg-rose-50 text-rose-700 border-rose-200'
                               }`}
                               title="ความยินยอมเข้าถึงข้อมูลกลุ่มเปราะบาง k-Anonymity"
                             >
@@ -376,8 +376,8 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                       </div>
 
                       {/* 1-Click Login Button inside Card */}
-                      <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-slate-400 truncate">
+                      <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-[10px] font-mono text-slate-500 truncate">
                           UID: {profile.lineUserId.substring(0, 10)}...
                         </span>
 
@@ -388,10 +388,10 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                             handleSelectMockProfile(profile);
                             onClose();
                           }}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                             isSelected
-                              ? 'bg-[#06C755] text-white hover:bg-[#05b34c] shadow-lg shadow-[#06C755]/20'
-                              : 'bg-white/10 text-slate-200 hover:bg-white/20'
+                              ? 'bg-[#06C755] text-white hover:bg-[#05b34c] shadow-sm'
+                              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                           }`}
                         >
                           <span>เข้าสู่ระบบเป็นคนนี้</span>
@@ -410,7 +410,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-4">
               
               {/* QR Code Container with Radar Scan Effect */}
-              <div className="relative p-6 rounded-3xl bg-white shadow-[0_0_60px_rgba(6,199,85,0.25)] flex flex-col items-center justify-center border-4 border-[#06C755]/30">
+              <div className="relative p-6 rounded-3xl bg-white shadow-card-lg flex flex-col items-center justify-center border-4 border-[#06C755]/30">
                 
                 {/* Visual QR Code Display */}
                 <div className="relative w-56 h-56 bg-white rounded-2xl flex items-center justify-center p-3">
@@ -460,11 +460,11 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                   </div>
 
                   {/* Laser Scanning Animation Beam */}
-                  <div className="absolute inset-x-2 top-0 h-1 bg-gradient-to-r from-transparent via-[#06C755] to-transparent animate-bounce opacity-80 pointer-events-none" />
+                  <div className="absolute inset-x-2 top-0 h-1 bg-gradient-to-r from-transparent via-[#06C755] to-transparent animate-pulse opacity-80 pointer-events-none" />
                 </div>
 
                 {/* Status & Countdown */}
-                <div className="mt-3 flex items-center gap-2 text-xs font-mono font-bold text-obsidian-950">
+                <div className="mt-3 flex items-center gap-2 text-xs font-mono font-bold text-slate-900">
                   <span className="w-2 h-2 rounded-full bg-[#06C755] animate-ping" />
                   <span>หมดอายุใน: {Math.floor(qrCountdown / 60)}:{(qrCountdown % 60).toString().padStart(2, '0')} นาที</span>
                 </div>
@@ -473,31 +473,31 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
               {/* QR Flow Steps & Simulation Trigger */}
               <div className="space-y-4 max-w-sm">
                 <div>
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                     <Smartphone className="w-5 h-5 text-[#06C755]" />
                     <span>เข้าสู่ระบบด้วย LINE บนมือถือ</span>
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     เปิด LINE บนสมาร์ทโฟน แล้วใช้กล้องสแกน QR Code เพื่อยืนยันตัวตน
                   </p>
                 </div>
 
-                <div className="space-y-2 text-xs text-slate-300">
-                  <div className="p-3 rounded-xl bg-obsidian-900 border border-white/10 flex items-start gap-2.5">
+                <div className="space-y-2 text-xs text-slate-600">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-2.5">
                     <span className="w-5 h-5 rounded-full bg-[#06C755]/20 text-[#06C755] font-mono font-bold flex items-center justify-center flex-shrink-0">
                       1
                     </span>
                     <span>เปิดแอป LINE &gt; แตะเมนูเพิ่มเพื่อน &gt; เลือก <strong>คิวอาร์โค้ด</strong></span>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-obsidian-900 border border-white/10 flex items-start gap-2.5">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-2.5">
                     <span className="w-5 h-5 rounded-full bg-[#06C755]/20 text-[#06C755] font-mono font-bold flex items-center justify-center flex-shrink-0">
                       2
                     </span>
                     <span>สแกน QR Code บนหน้าจอนี้ แล้วกดยืนยันการเข้าสู่ระบบบนโทรศัพท์</span>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-obsidian-900 border border-white/10 flex items-start gap-2.5">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-2.5">
                     <span className="w-5 h-5 rounded-full bg-[#06C755]/20 text-[#06C755] font-mono font-bold flex items-center justify-center flex-shrink-0">
                       3
                     </span>
@@ -510,7 +510,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                   <button
                     onClick={() => handleSimulateQrScan(selectedProfile)}
                     disabled={qrScannedSuccess}
-                    className="w-full py-3 px-4 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs sm:text-sm shadow-lg shadow-[#06C755]/30 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+                    className="w-full py-3 px-4 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs sm:text-sm shadow-sm transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   >
                     {qrScannedSuccess ? (
                       <>
@@ -527,7 +527,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                   <div className="mt-2 text-center">
                     <button
                       onClick={handleRefreshTokens}
-                      className="text-[11px] text-slate-400 hover:text-white flex items-center gap-1 mx-auto"
+                      className="text-[11px] text-slate-500 hover:text-slate-900 flex items-center gap-1 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded"
                     >
                       <RefreshCw className="w-3 h-3" />
                       <span>รีเฟรช QR Code และ State Token ใหม่</span>
@@ -543,32 +543,32 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
           {/* TAB 3: REAL OAUTH 2.1 DIRECT REDIRECT */}
           {activeTab === 'oauth' && (
             <div className="space-y-5">
-              <div className="p-4 rounded-2xl bg-obsidian-900 border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
-                    <span className="text-xs font-bold text-white font-mono uppercase">
+                    <Radio className="w-4 h-4 text-emerald-600 animate-pulse" />
+                    <span className="text-xs font-bold text-slate-900 font-mono uppercase">
                       Official LINE Login OIDC Authorization Endpoint
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">
                     RFC 6749 / OpenID Connect Core 1.0
                   </span>
                 </div>
 
                 <div className="relative">
-                  <pre className="p-3 rounded-xl bg-obsidian-950 font-mono text-[11px] text-emerald-300 overflow-x-auto border border-white/10 break-all whitespace-pre-wrap select-all">
+                  <pre className="p-3 rounded-xl bg-white font-mono text-[11px] text-emerald-700 overflow-x-auto border border-slate-200 break-all whitespace-pre-wrap select-all">
                     {authUrl}
                   </pre>
                   <button
                     onClick={handleCopyUrl}
-                    className="absolute top-2 right-2 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-all flex items-center gap-1 text-[10px]"
+                    className="absolute top-2 right-2 p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1 text-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     title="คัดลอก URL"
                   >
                     {copiedUrl ? (
                       <>
-                        <Check className="w-3 h-3 text-emerald-400" />
-                        <span className="text-emerald-400">คัดลอกแล้ว</span>
+                        <Check className="w-3 h-3 text-emerald-600" />
+                        <span className="text-emerald-600">คัดลอกแล้ว</span>
                       </>
                     ) : (
                       <>
@@ -581,40 +581,40 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
 
                 {/* Query Parameters Breakdown Table */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono">
-                  <div className="p-2 rounded-lg bg-obsidian-950/60 border border-white/5 flex justify-between">
-                    <span className="text-slate-400">response_type:</span>
-                    <span className="text-white">code</span>
+                  <div className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between">
+                    <span className="text-slate-500">response_type:</span>
+                    <span className="text-slate-900">code</span>
                   </div>
-                  <div className="p-2 rounded-lg bg-obsidian-950/60 border border-white/5 flex justify-between">
-                    <span className="text-slate-400">client_id:</span>
-                    <span className="text-white truncate max-w-[140px]">{currentClientId}</span>
+                  <div className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between">
+                    <span className="text-slate-500">client_id:</span>
+                    <span className="text-slate-900 truncate max-w-[140px]">{currentClientId}</span>
                   </div>
-                  <div className="p-2 rounded-lg bg-obsidian-950/60 border border-white/5 flex justify-between">
-                    <span className="text-slate-400">scope:</span>
+                  <div className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between">
+                    <span className="text-slate-500">scope:</span>
                     <span className="text-[#06C755]">openid profile email</span>
                   </div>
-                  <div className="p-2 rounded-lg bg-obsidian-950/60 border border-white/5 flex justify-between">
-                    <span className="text-slate-400">state (Anti-CSRF):</span>
-                    <span className="text-cyan-300 truncate max-w-[120px]">{stateToken}</span>
+                  <div className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between">
+                    <span className="text-slate-500">state (Anti-CSRF):</span>
+                    <span className="text-cyan-700 truncate max-w-[120px]">{stateToken}</span>
                   </div>
-                  <div className="p-2 rounded-lg bg-obsidian-950/60 border border-white/5 flex justify-between">
-                    <span className="text-slate-400">nonce:</span>
-                    <span className="text-purple-300 truncate max-w-[120px]">{nonceToken}</span>
+                  <div className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between">
+                    <span className="text-slate-500">nonce:</span>
+                    <span className="text-purple-700 truncate max-w-[120px]">{nonceToken}</span>
                   </div>
-                  <div className="p-2 rounded-lg bg-obsidian-950/60 border border-white/5 flex justify-between">
-                    <span className="text-slate-400">bot_prompt:</span>
-                    <span className="text-white">normal</span>
+                  <div className="p-2 rounded-lg bg-white border border-slate-200 flex justify-between">
+                    <span className="text-slate-500">bot_prompt:</span>
+                    <span className="text-slate-900">normal</span>
                   </div>
                 </div>
               </div>
 
               {/* Redirect Action Button */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-gradient-to-r from-[#06C755]/10 via-obsidian-900 to-obsidian-900 border border-[#06C755]/30">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-climate-50 border border-climate-200">
                 <div>
-                  <h4 className="text-xs font-bold text-white">
+                  <h4 className="text-xs font-bold text-slate-900">
                     เปิดไปยัง LINE Developers Official Login Page
                   </h4>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] text-slate-500">
                     สำหรับสภาพแวดล้อม Production ที่เชื่อมต่อ LINE Official Account และ Supabase Auth Provider
                   </p>
                 </div>
@@ -622,7 +622,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                   href={authUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs transition-all shadow-lg shadow-[#06C755]/20 flex items-center gap-2 whitespace-nowrap"
+                  className="px-5 py-2.5 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs transition-all shadow-sm flex items-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <span>ไปที่ LINE Login</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -636,44 +636,44 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
             <div className="space-y-6">
               
               {/* Thailand PDPA Notice Box */}
-              <div className="p-4 rounded-2xl bg-obsidian-900 border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center gap-2">
-                  <FileCheck2 className="w-4 h-4 text-emerald-400" />
-                  <h3 className="text-xs font-bold text-white font-mono uppercase">
+                  <FileCheck2 className="w-4 h-4 text-emerald-600" />
+                  <h3 className="text-xs font-bold text-slate-900 font-mono uppercase">
                     การเปิดเผยข้อมูลตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (Thailand PDPA)
                   </h3>
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   Climate Action OS ให้ความสำคัญสูงสุดกับความเป็นส่วนตัวของชุมชนและข้อมูลเปราะบางทางสภาพภูมิอากาศ โดยระบบจะขอความยินยอมและประมวลผลข้อมูลตามวัตถุประสงค์ที่กำหนดไว้อย่างเคร่งครัด:
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                  <div className="p-3 rounded-xl bg-obsidian-950 border border-white/5 space-y-1.5">
+                  <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white text-xs">1. openid & profile</span>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="font-bold text-slate-900 text-xs">1. openid & profile</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
                     </div>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-slate-500">
                       ใช้ LINE User ID และชื่อแสดงเพื่อสร้าง Session และผูกสิทธิ์เข้ากับองค์กรในพื้นที่
                     </p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-obsidian-950 border border-white/5 space-y-1.5">
+                  <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white text-xs">2. evidence_capture</span>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="font-bold text-slate-900 text-xs">2. evidence_capture</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
                     </div>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-slate-500">
                       ยินยอมให้บันทึกภาพถ่าย ตั๋วชั่งน้ำหนักขยะ และพิกัด GPS เพื่อการตรวจทาน MRV
                     </p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-obsidian-950 border border-white/5 space-y-1.5">
+                  <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white text-xs">3. vulnerability_data</span>
-                      <Check className="w-3.5 h-3.5 text-cyan-400" />
+                      <span className="font-bold text-slate-900 text-xs">3. vulnerability_data</span>
+                      <Check className="w-3.5 h-3.5 text-cyan-600" />
                     </div>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-slate-500">
                       ยินยอมให้ประมวลผลข้อมูลกลุ่มเปราะบางภายใต้กลไก k-Anonymity (k ≥ 10)
                     </p>
                   </div>
@@ -681,58 +681,58 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
               </div>
 
               {/* STRIDE Threat Model Section C.2 Matrix */}
-              <div className="p-4 rounded-2xl bg-obsidian-900 border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-cyan-400" />
-                    <h3 className="text-xs font-bold text-white font-mono uppercase">
+                    <Shield className="w-4 h-4 text-cyan-600" />
+                    <h3 className="text-xs font-bold text-slate-900 font-mono uppercase">
                       Climate Action OS STRIDE Threat Model (Section C.2)
                     </h3>
                   </div>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                  <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                     PASSED SECURITY AUDIT
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
-                  <div className="p-2.5 rounded-xl bg-obsidian-950/80 border border-white/5">
-                    <span className="font-mono text-[10px] text-emerald-400 block font-bold">[S] Spoofing Defense</span>
-                    <span className="text-slate-300 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                    <span className="font-mono text-[10px] text-emerald-700 block font-bold">[S] Spoofing Defense</span>
+                    <span className="text-slate-600 text-[11px]">
                       ยืนยันตัวตนผ่าน LINE OIDC ID Token แบบเข้ารหัส พร้อม Anti-CSRF Cryptographic State
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-obsidian-950/80 border border-white/5">
-                    <span className="font-mono text-[10px] text-cyan-400 block font-bold">[T] Tampering Defense</span>
-                    <span className="text-slate-300 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                    <span className="font-mono text-[10px] text-cyan-700 block font-bold">[T] Tampering Defense</span>
+                    <span className="text-slate-600 text-[11px]">
                       SHA-256 Hash Verification บนหลักฐาน MRV และ Append-Only Ledger Triggers
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-obsidian-950/80 border border-white/5">
-                    <span className="font-mono text-[10px] text-purple-400 block font-bold">[R] Repudiation Defense</span>
-                    <span className="text-slate-300 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                    <span className="font-mono text-[10px] text-purple-700 block font-bold">[R] Repudiation Defense</span>
+                    <span className="text-slate-600 text-[11px]">
                       ตาราง consent_records และ audit_log เก็บร่องรอยเวลาและ User ID ที่แก้ไขข้อมูล
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-obsidian-950/80 border border-white/5">
-                    <span className="font-mono text-[10px] text-amber-400 block font-bold">[I] Information Disclosure</span>
-                    <span className="text-slate-300 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                    <span className="font-mono text-[10px] text-amber-700 block font-bold">[I] Information Disclosure</span>
+                    <span className="text-slate-600 text-[11px]">
                       k-Anonymity (k ≥ 10) ซ่อนจำนวนกลุ่มเปราะบางต่อสาธารณะ พร้อม PostGIS Spatial Filtering
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-obsidian-950/80 border border-white/5">
-                    <span className="font-mono text-[10px] text-rose-400 block font-bold">[D] Denial of Service</span>
-                    <span className="text-slate-300 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                    <span className="font-mono text-[10px] text-rose-700 block font-bold">[D] Denial of Service</span>
+                    <span className="text-slate-600 text-[11px]">
                       Offline-First Client Queue Sync ป้องกันระบบล่มเมื่อสัญญาณอินเทอร์เน็ตขาดหาย
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-obsidian-950/80 border border-white/5">
-                    <span className="font-mono text-[10px] text-blue-400 block font-bold">[E] Elevation of Privilege</span>
-                    <span className="text-slate-300 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200">
+                    <span className="font-mono text-[10px] text-blue-700 block font-bold">[E] Elevation of Privilege</span>
+                    <span className="text-slate-600 text-[11px]">
                       Row-Level Security (RLS) บังคับ 6 บทบาทแยกสิทธิ์ขาดจากกันในระดับ Postgres Engine
                     </span>
                   </div>
@@ -745,9 +745,9 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
         </div>
 
         {/* Footer Bar */}
-        <div className="px-5 sm:px-8 py-4 border-t border-white/10 bg-obsidian-900/90 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[11px] text-slate-400">
-            <Lock className="w-3.5 h-3.5 text-slate-400" />
+        <div className="px-5 sm:px-8 py-4 border-t border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-[11px] text-slate-500">
+            <Lock className="w-3.5 h-3.5 text-slate-500" />
             <span>เชื่อมต่อผ่านโปรโตคอล TLS 1.3 พร้อมระบบตารางความยินยอม PDPA</span>
           </div>
 
@@ -755,7 +755,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
             {lineUser && onLogout && (
               <button
                 onClick={onLogout}
-                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 border border-rose-500/30 transition-colors flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span>ออกจากระบบ</span>
@@ -763,7 +763,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
             )}
             <button
               onClick={onClose}
-              className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               ปิด
             </button>
@@ -772,7 +772,7 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
                 handleSelectMockProfile(selectedProfile);
                 onClose();
               }}
-              className="w-full sm:w-auto px-5 py-2 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs transition-all shadow-lg shadow-[#06C755]/20 flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto px-5 py-2 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-climate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               <span>ยืนยันเข้าใช้งาน</span>
               <ArrowRight className="w-3.5 h-3.5" />

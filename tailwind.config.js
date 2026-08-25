@@ -42,11 +42,12 @@ export default {
         }
       },
       boxShadow: {
-        'subtle-emerald': '0 4px 20px -2px rgba(16, 185, 129, 0.12)',
-        'subtle-cyan': '0 4px 20px -2px rgba(6, 182, 212, 0.12)',
-        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.35)',
-        'glass-elevation': '0 12px 40px -8px rgba(0, 0, 0, 0.5)',
-        'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08)',
+        'subtle-emerald': '0 4px 16px -4px rgba(16, 185, 129, 0.18)',
+        'subtle-cyan': '0 4px 16px -4px rgba(6, 182, 212, 0.14)',
+        'card': '0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06)',
+        'card-hover': '0 8px 20px -6px rgba(15, 23, 42, 0.10), 0 2px 6px -2px rgba(15, 23, 42, 0.06)',
+        'card-lg': '0 12px 32px -8px rgba(15, 23, 42, 0.12), 0 4px 10px -4px rgba(15, 23, 42, 0.06)',
+        'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.6)',
       },
       animation: {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',

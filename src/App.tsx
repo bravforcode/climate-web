@@ -57,7 +57,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col selection:bg-climate-500/30 selection:text-climate-300">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-climate-100 selection:text-climate-800">
       
       {/* 1. Navigation with Floating Pill, 3-Stage Switcher & Unified Role Popover */}
       <Navbar
