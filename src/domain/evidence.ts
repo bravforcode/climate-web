@@ -20,16 +20,8 @@ export async function computeSHA256(
     throw new TypeError('Content must be a string, ArrayBuffer, or Uint8Array');
   }
 
-  // Use crypto.subtle (available globally in Bun, Node 19+, and modern browsers)
-  let buffer: ArrayBuffer;
-  if (typeof crypto !== 'undefined' && crypto.subtle) {
-    buffer = await crypto.subtle.digest('SHA-256', data as unknown as BufferSource);
-  } else {
-    // Fallback using node/bun crypto if available
-    const nodeCrypto = await import('node:crypto');
-    const hash = nodeCrypto.createHash('sha256').update(data).digest('hex');
-    return options?.prefix ? `sha256:${hash}` : hash;
-  }
+  // Web Crypto API only (browser-native); no Node-specific fallback.
+  const buffer = await crypto.subtle.digest('SHA-256', data as unknown as BufferSource);
 
   const hashArray = Array.from(new Uint8Array(buffer));
   const hex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');

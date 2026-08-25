@@ -180,47 +180,30 @@ export function base64UrlDecode(str: string): string {
     throw new Error('Invalid input: str must be a non-empty string');
   }
 
-  // Replace Base64URL characters with standard Base64 characters
-  let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+  // Strip whitespace, then convert Base64URL characters to standard Base64
+  const base64 = str.replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
   while (base64.length % 4 !== 0) {
     base64 += '=';
   }
 
-  if (typeof atob === 'function') {
-    const binaryStr = atob(base64);
-    const bytes = new Uint8Array(binaryStr.length);
-    for (let i = 0; i < binaryStr.length; i++) {
-      bytes[i] = binaryStr.charCodeAt(i);
-    }
-    return new TextDecoder('utf-8').decode(bytes);
+  const binaryStr = atob(base64);
+  const bytes = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) {
+    bytes[i] = binaryStr.charCodeAt(i);
   }
-
-  // Node.js fallback if Buffer is present
-  if (typeof Buffer !== 'undefined') {
-    return Buffer.from(base64, 'base64').toString('utf-8');
-  }
-
-  throw new Error('No base64 decoder available in current runtime environment');
+  return new TextDecoder('utf-8').decode(bytes);
 }
 
 /**
  * Safe Base64URL encoder supporting multi-byte UTF-8 character encoding.
  */
 export function base64UrlEncode(str: string): string {
-  let base64: string;
-
-  if (typeof btoa === 'function') {
-    const bytes = new TextEncoder().encode(str);
-    let binary = '';
-    for (let i = 0; i < bytes.length; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    base64 = btoa(binary);
-  } else if (typeof Buffer !== 'undefined') {
-    base64 = Buffer.from(str, 'utf-8').toString('base64');
-  } else {
-    throw new Error('No base64 encoder available in current runtime environment');
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
   }
+  const base64 = btoa(binary);
 
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
