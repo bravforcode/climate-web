@@ -872,15 +872,11 @@ class ReactiveDatabase {
       );
     }
 
-    // Mock realistic SHA-256 hash if none provided
-    const fileHash =
-      data.file_hash ||
-      `sha256:${Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`;
-
+    // Data honesty: never fabricate hashes. Store provided hash as-is; null when absent.
     const evidence: Evidence = {
       ...data,
       id: crypto.randomUUID(),
-      file_hash: fileHash,
+      file_hash: data.file_hash ?? null,
       captured_at: data.captured_at || new Date().toISOString(),
       captured_by: capturedBy,
     };
@@ -1018,15 +1014,30 @@ class ReactiveDatabase {
 
   public getTotalWasteWeighedKg(projectId?: string): number {
     const evidenceList = this.getEvidence(projectId);
-    // Filter weigh tickets and extract kg from payload / mock data
     const weighTickets = evidenceList.filter((e) => e.evidence_type === 'weigh_ticket');
-    if (weighTickets.length === 0) return 142.5; // Baseline pilot weigh
-    return weighTickets.length * 142.5;
+    let totalKg = 0;
+    for (const ticket of weighTickets) {
+      const raw = (ticket as any).payload ?? (ticket as any).raw_payload;
+      if (raw == null) continue; // ticket without recorded weight contributes nothing
+      let parsed: unknown = raw;
+      if (typeof raw === 'string') {
+        try {
+          parsed = JSON.parse(raw);
+        } catch {
+          continue; // skip unparsable payloads instead of guessing
+        }
+      }
+      const fields =
+        parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
+      const kg = Number(fields.weight_kg ?? fields.total_weight_kg ?? fields.net_weight_kg);
+      if (Number.isFinite(kg) && kg >= 0) totalKg += kg;
+    }
+    return totalKg;
   }
 
   public getHeatRefugeCheckinsCount(projectId?: string): number {
     const evidenceList = this.getEvidence(projectId);
-    return evidenceList.filter((e) => e.evidence_type === 'gps_checkin').length + 84;
+    return evidenceList.filter((e) => e.evidence_type === 'gps_checkin').length;
   }
 
   public getLedgerSummary(projectId?: string): {
