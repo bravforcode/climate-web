@@ -1,0 +1,4 @@
+dist/
+.claude-flow/
+.lean-ctx-init
+node_modules/.vite/
