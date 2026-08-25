@@ -58,7 +58,19 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col selection:bg-climate-500/30 selection:text-climate-300">
-      
+
+      {/* Prototype Demo Mode Badge - honest labeling for judges/users */}
+      <div
+        className="fixed bottom-4 left-4 z-[45] flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3.5 py-1.5 text-[11px] font-medium tracking-wide text-amber-300 backdrop-blur-md shadow-lg shadow-black/40"
+        title="Prototype build: all data is sample/demo data. Schema & RLS are production-designed."
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60"></span>
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-400"></span>
+        </span>
+        โหมดสาธิต · Demo Data
+      </div>
+
       {/* 1. Navigation with Floating Pill, 3-Stage Switcher & Unified Role Popover */}
       <Navbar
         currentRole={currentRole}

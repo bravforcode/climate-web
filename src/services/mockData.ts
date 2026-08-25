@@ -317,6 +317,94 @@ export const initialVulnerabilityZones: VulnerabilityZone[] = [
     k_anonymity_suppressed: true,
     updated_at: '2026-08-20T10:00:00+07:00',
   },
+  {
+    id: 'b0000000-0000-0000-0000-000000000003',
+    zone: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [100.5595, 13.714],
+          [100.5645, 13.714],
+          [100.5645, 13.7185],
+          [100.5595, 13.7185],
+          [100.5595, 13.714],
+        ],
+      ],
+    },
+    elderly_count: 210,
+    disability_count: 58,
+    low_income_household_count: 512,
+    outdoor_worker_count: 880,
+    total_population: 2640,
+    k_anonymity_suppressed: false,
+    updated_at: '2026-08-21T09:30:00+07:00',
+  },
+  {
+    id: 'b0000000-0000-0000-0000-000000000004',
+    zone: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [100.562, 13.7095],
+          [100.5665, 13.7095],
+          [100.5665, 13.7135],
+          [100.562, 13.7135],
+          [100.562, 13.7095],
+        ],
+      ],
+    },
+    elderly_count: 178,
+    disability_count: 41,
+    low_income_household_count: 296,
+    outdoor_worker_count: 415,
+    total_population: 1980,
+    k_anonymity_suppressed: false,
+    updated_at: '2026-08-22T14:10:00+07:00',
+  },
+  {
+    id: 'b0000000-0000-0000-0000-000000000005',
+    zone: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [100.5155, 13.7525],
+          [100.5205, 13.7525],
+          [100.5205, 13.757],
+          [100.5155, 13.757],
+          [100.5155, 13.7525],
+        ],
+      ],
+    },
+    elderly_count: 96,
+    disability_count: 27,
+    low_income_household_count: 204,
+    outdoor_worker_count: 368,
+    total_population: 1120,
+    k_anonymity_suppressed: false,
+    updated_at: '2026-08-23T08:45:00+07:00',
+  },
+  {
+    id: 'b0000000-0000-0000-0000-000000000006',
+    zone: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [100.5535, 13.7225],
+          [100.5555, 13.7225],
+          [100.5555, 13.7245],
+          [100.5535, 13.7225],
+          [100.5535, 13.7225],
+        ],
+      ],
+    },
+    elderly_count: null, // suppressed (was 8, < k=10)
+    disability_count: 11,
+    low_income_household_count: 34,
+    outdoor_worker_count: 52,
+    total_population: 88,
+    k_anonymity_suppressed: true,
+    updated_at: '2026-08-23T16:20:00+07:00',
+  },
 ];
 
 export const initialCommunityPriorities: CommunityPriority[] = [
@@ -347,6 +435,62 @@ export const initialCommunityPriorities: CommunityPriority[] = [
     priority_score: (4.5 * 850 * 4.0 * 4.5) / 85000.0, // 0.81
     created_by: '22222222-2222-2222-2222-222222222222',
     created_at: '2026-08-21T11:00:00+07:00',
+  },
+  {
+    id: 'c1000000-0000-0000-0000-000000000003',
+    organization_id: '00000000-0000-0000-0000-000000000001',
+    problem_statement:
+      'ฝุ่น PM2.5 ช่วงหมอกรุงที่สะสมในโรงเรือนปิดของตลาดคลองเตย ทำให้เด็กและผู้สูงอายุในพื้นที่เป็นโรคทางเดินหายใจเพิ่มขึ้นช่วงมกราคม-เมษายนทุกปี',
+    urgency: 4.8,
+    beneficiaries_est: 1800,
+    feasibility: 4.2,
+    equity_score: 4.6,
+    cost_est: 95000.0,
+    priority_score: (4.8 * 1800 * 4.2 * 4.6) / 95000.0, // ≈1.67
+    created_by: '11111111-1111-1111-1111-111111111111',
+    created_at: '2026-08-22T10:20:00+07:00',
+  },
+  {
+    id: 'c1000000-0000-0000-0000-000000000004',
+    organization_id: '00000000-0000-0000-0000-000000000002',
+    problem_statement:
+      'ลานตากสินค้าเกษตรของตลาดสะพานขาวไม่มีชานยกและร่องระบายน้ำขนาดเล็ก ทำให้น้ำท่วมขังหลังฝนตก 15-30 นาที สินค้าเน่าเสียและพื้นลื่นเสี่ยงอุบัติเหตุผู้ค้าสูงวัย',
+    urgency: 4.2,
+    beneficiaries_est: 600,
+    feasibility: 4.8,
+    equity_score: 4.2,
+    cost_est: 45000.0,
+    priority_score: (4.2 * 600 * 4.8 * 4.2) / 45000.0, // ≈2.26 (rank #1 - quick win)
+    created_by: '22222222-2222-2222-2222-222222222222',
+    created_at: '2026-08-23T13:40:00+07:00',
+  },
+  {
+    id: 'c1000000-0000-0000-0000-000000000005',
+    organization_id: '00000000-0000-0000-0000-000000000005',
+    problem_statement:
+      'ค่าไฟเครื่องผลิตน้ำแข็งของสหกรณ์ริมคลองเตยสูงถึง 38,000 บาท/เดือน กดดันรายได้สมาชิก และเครื่องปั่นไฟสำรองเดิมปล่อยควันดำช่วงไฟดับจากพายุฤดูร้อน',
+    urgency: 3.5,
+    beneficiaries_est: 320,
+    feasibility: 4.0,
+    equity_score: 3.8,
+    cost_est: 240000.0,
+    priority_score: (3.5 * 320 * 4.0 * 3.8) / 240000.0, // ≈0.71
+    created_by: '33333333-3333-3333-3333-333333333333',
+    created_at: '2026-08-23T17:05:00+07:00',
+  },
+  {
+    id: 'c1000000-0000-0000-0000-000000000006',
+    organization_id: '00000000-0000-0000-0000-000000000003',
+    problem_statement:
+      'หลังคาซีเมนต์สีเข้มของอาคารร้านค้าในสังกัดเขตคลองเตยสะสมความร้อนจนอุณหภูมิผิวหลังคาแตะ 65°C ช่วงบ่าย เพิ่มภาระเครื่องปรับอากาศและความเสี่ยงลมแดดของผู้ใช้พื้นที่ชั้นบน',
+    urgency: 4.0,
+    beneficiaries_est: 3100,
+    feasibility: 3.8,
+    equity_score: 4.0,
+    cost_est: 380000.0,
+    priority_score: (4.0 * 3100 * 3.8 * 4.0) / 380000.0, // ≈1.24
+    created_by: '44444444-4444-4444-4444-444444444444',
+    created_at: '2026-08-24T09:55:00+07:00',
   },
 ];
 
@@ -490,6 +634,15 @@ export const initialFundingCallSources: FundingCallSource[] = [
     notes:
       'โครงการสนับสนุนนวัตกรรมสิ่งแวดล้อมชุมชนและการปรับตัวต่อการเปลี่ยนแปลงสภาพภูมิอากาศเมืองหลวง',
   },
+  {
+    id: 'f0000000-0000-0000-0000-000000000004',
+    source_name: 'Green Climate Fund Readiness Program (ผ่าน ONEP National Designated Authority)',
+    ingestion_method: 'manual_only',
+    commercial_use_allowed: false,
+    attribution_required: true,
+    notes:
+      'ทุนเตรียมความพร้อม GCF สำหรับแผนปรับตัวระดับชุมชน/อปท. เข้าถึงผ่านหน่วยงานกรมอุทยานฯ (ONEP) ในฐานะ NDA ของไทย - ต้องมี Accredited Entity ร่วม',
+  },
 ];
 
 export const initialFundingCalls: FundingCall[] = [
@@ -552,6 +705,26 @@ export const initialFundingCalls: FundingCall[] = [
     last_verified_at: '2026-08-22T09:15:00+07:00',
     created_at: '2026-08-22T09:15:00+07:00',
   },
+  {
+    id: 'fc000000-0000-0000-0000-000000000004',
+    source_id: 'f0000000-0000-0000-0000-000000000004',
+    funder_name: 'GCF Readiness Grant - Community-Based Adaptation Planning (ทุนเตรียมความพร้อม GCF)',
+    thematic_fit: [
+      'adaptation_planning',
+      'capacity_building',
+      'community_engagement',
+      'vulnerable_groups',
+    ],
+    eligibility_notes:
+      'อปท. / เครือข่ายชุมชน / สหกรณ์ ที่มีแผนปรับตัวระดับพื้นที่และหน่วยงานระดับชาติ (NDA) รับรองแนวทาง - ดำเนินการร่วมกับ Accredited Entity',
+    max_amount: 250000.0,
+    co_financing_required: false,
+    application_deadline: '2027-01-31',
+    source_url: 'https://www.gcfreadiness.onep.go.th/community-adaptation-2027',
+    entered_by: '55555555-5555-5555-5555-555555555555',
+    last_verified_at: '2026-08-24T11:30:00+07:00',
+    created_at: '2026-08-24T11:30:00+07:00',
+  },
 ];
 
 export const initialFundingMatches: FundingMatch[] = [
@@ -575,6 +748,14 @@ export const initialFundingMatches: FundingMatch[] = [
     project_id: 'e0000000-0000-0000-0000-000000000001',
     funding_call_id: 'fc000000-0000-0000-0000-000000000002',
     match_score: 76.5,
+    is_human_confirmed: false,
+    confirmed_by: null,
+    confirmed_at: null,
+  },
+  {
+    project_id: 'e0000000-0000-0000-0000-000000000001',
+    funding_call_id: 'fc000000-0000-0000-0000-000000000004',
+    match_score: 71.0,
     is_human_confirmed: false,
     confirmed_by: null,
     confirmed_at: null,
