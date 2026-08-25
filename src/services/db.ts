@@ -1017,7 +1017,7 @@ class ReactiveDatabase {
     const weighTickets = evidenceList.filter((e) => e.evidence_type === 'weigh_ticket');
     let totalKg = 0;
     for (const ticket of weighTickets) {
-      const raw = (ticket as any).payload ?? (ticket as any).raw_payload;
+      const raw = ticket.payload; // typed field (evidence.payload jsonb)
       if (raw == null) continue; // ticket without recorded weight contributes nothing
       let parsed: unknown = raw;
       if (typeof raw === 'string') {

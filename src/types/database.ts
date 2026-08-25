@@ -246,6 +246,8 @@ export interface Evidence {
   evidence_type: EvidenceType;
   file_url?: string | null;
   file_hash?: string | null;
+  /** Structured MRV payload (mirrors evidence.payload jsonb). e.g. weigh_ticket: { weight_kg } */
+  payload?: Record<string, unknown> | null;
   captured_at: string;
   captured_by?: string | null;
   geom?: GeoShape | null;
