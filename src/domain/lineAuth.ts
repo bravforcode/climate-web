@@ -181,7 +181,7 @@ export function base64UrlDecode(str: string): string {
   }
 
   // Strip whitespace, then convert Base64URL characters to standard Base64
-  const base64 = str.replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+  let base64 = str.replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
   while (base64.length % 4 !== 0) {
     base64 += '=';
   }
