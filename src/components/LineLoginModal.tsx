@@ -68,8 +68,17 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
   // Regenerate state & nonce when modal opens
   useEffect(() => {
     if (isOpen) {
-      setStateToken(generateState(24));
-      setNonceToken(generateNonce(24));
+      // Anti-CSRF state + OIDC nonce: crypto.getRandomValues, hex, 32 chars.
+      // State mirrored to sessionStorage for callback-path verification.
+      const state = generateState(32);
+      const nonce = generateNonce(32);
+      setStateToken(state);
+      setNonceToken(nonce);
+      try {
+        window.sessionStorage.setItem('line_oauth_state', state);
+      } catch {
+        // storage unavailable (e.g. private mode) — state kept in React state only
+      }
       setQrCountdown(180);
       setQrScannedSuccess(false);
     }
@@ -91,8 +100,8 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
   const authUrl = generateLineAuthUrl({
     clientId: currentClientId,
     redirectUri: currentRedirectUri,
-    state: stateToken || 'dev_state_token_2026',
-    nonce: nonceToken || 'dev_nonce_token_2026',
+    state: stateToken || generateState(32),
+    nonce: nonceToken || generateNonce(32),
     scope: DEFAULT_LINE_SCOPE,
     botPrompt: 'normal',
   });
@@ -106,8 +115,15 @@ export const LineLoginModal: React.FC<LineLoginModalProps> = ({
   };
 
   const handleRefreshTokens = () => {
-    setStateToken(generateState(24));
-    setNonceToken(generateNonce(24));
+    const state = generateState(32);
+    const nonce = generateNonce(32);
+    setStateToken(state);
+    setNonceToken(nonce);
+    try {
+      window.sessionStorage.setItem('line_oauth_state', state);
+    } catch {
+      // ignore
+    }
     setQrCountdown(180);
     setQrScannedSuccess(false);
   };
