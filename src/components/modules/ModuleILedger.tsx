@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Database, 
   PlusCircle, 
@@ -15,13 +15,36 @@ import confetti from 'canvas-confetti';
 import { LedgerEntry, UserRole } from '../../types';
 import { MOCK_LEDGER_ENTRIES } from '../../data/mockData';
 import { formatCurrency, formatShortHash, computeSHA256 } from '../../utils/crypto';
+import db from '../../services/db';
 
 interface ModuleIProps {
   currentRole: UserRole;
 }
 
 export const ModuleILedger: React.FC<ModuleIProps> = ({ currentRole }) => {
-  const [entries, setEntries] = useState<LedgerEntry[]>(MOCK_LEDGER_ENTRIES);
+  const [entries, setEntries] = useState<LedgerEntry[]>(() => {
+    try {
+      const dbEntries = db.getLedgerEntries();
+      if (dbEntries && dbEntries.length > 0) {
+        return dbEntries.map((e) => ({
+          id: e.id,
+          projectId: e.projectId,
+          entryType: e.entryType as any,
+          entryTypeLabelTh: e.entryType === 'income' ? 'รายได้ / ทุนอุดหนุน' : e.entryType === 'expense' ? 'ค่าใช้จ่ายดำเนินงาน' : 'มูลค่าสมทบ (In-kind)',
+          amount: e.amount,
+          descriptionTh: e.descriptionTh || e.description || '',
+          enteredBy: e.enteredBy,
+          enteredAt: e.enteredAt || e.createdAt,
+          verifiedHash: e.verifiedHash || e.receiptHash,
+          correctsEntryId: e.correctsEntryId,
+        }));
+      }
+    } catch {
+      // fallback
+    }
+    return MOCK_LEDGER_ENTRIES;
+  });
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [showCorrectionModal, setShowCorrectionModal] = useState(false);
   const [selectedTargetEntry, setSelectedTargetEntry] = useState<LedgerEntry | null>(null);
@@ -30,6 +53,28 @@ export const ModuleILedger: React.FC<ModuleIProps> = ({ currentRole }) => {
   const [entryType, setEntryType] = useState<'income' | 'expense' | 'in_kind'>('expense');
   const [amount, setAmount] = useState<string>('4500');
   const [description, setDescription] = useState<string>('ค่าบำรุงรักษาหัวพ่นหมอกและเปลี่ยนไส้กรองน้ำ');
+
+  // Reactive subscription to db changes (including real-time Stripe / CSR donations)
+  useEffect(() => {
+    const unsubscribe = db.subscribe(() => {
+      const dbEntries = db.getLedgerEntries();
+      if (dbEntries && dbEntries.length > 0) {
+        setEntries(dbEntries.map((e: any) => ({
+          id: e.id,
+          projectId: e.projectId || e.project_id || 'proj-pilot-market-01',
+          entryType: e.entryType || e.entry_type || 'income',
+          entryTypeLabelTh: (e.entryType || e.entry_type) === 'income' ? 'รายได้ / ทุนอุดหนุน (CSR)' : (e.entryType || e.entry_type) === 'expense' ? 'ค่าใช้จ่ายดำเนินงาน' : 'มูลค่าสมทบ (In-kind)',
+          amount: e.amount,
+          descriptionTh: e.descriptionTh || e.description || '',
+          enteredBy: e.enteredBy || e.entered_by || 'System',
+          enteredAt: e.enteredAt || e.entered_at || e.createdAt || new Date().toISOString(),
+          verifiedHash: e.verifiedHash || e.receiptHash || e.verified_hash || 'hash',
+          correctsEntryId: e.correctsEntryId || e.corrects_entry_id,
+        })));
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   // Calculate Net benefit & summary
   const totalIncome = entries
@@ -64,9 +109,18 @@ export const ModuleILedger: React.FC<ModuleIProps> = ({ currentRole }) => {
       verifiedHash: hash,
     };
 
-    setEntries([...entries, newEntry]);
+    setEntries((prev) => [newEntry, ...prev]);
     setShowAddModal(false);
     try {
+      db.insertLedgerEntry({
+        project_id: newEntry.projectId,
+        entry_type: newEntry.entryType as any,
+        amount: newEntry.amount,
+        description: newEntry.descriptionTh,
+        description_th: newEntry.descriptionTh,
+        entered_by: newEntry.enteredBy,
+        verified_hash: hash,
+      } as any);
       confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
     } catch {
       // ignore
@@ -136,21 +190,21 @@ export const ModuleILedger: React.FC<ModuleIProps> = ({ currentRole }) => {
         {/* Tally Stats Bar */}
         <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
           <div className="p-2.5 rounded-xl bg-obsidian-900/80 border border-white/5">
-            <span className="text-[10px] font-mono text-slate-400 block">เงินทุนรับสะสม</span>
+            <span className="text-xs text-slate-400 block">เงินทุนรับสะสม</span>
             <span className="text-sm font-bold font-mono text-emerald-400">
               {formatCurrency(totalIncome)}
             </span>
           </div>
 
           <div className="p-2.5 rounded-xl bg-obsidian-900/80 border border-white/5">
-            <span className="text-[10px] font-mono text-slate-400 block">ค่าใช้จ่ายจริง</span>
+            <span className="text-xs text-slate-400 block">ค่าใช้จ่ายจริง</span>
             <span className="text-sm font-bold font-mono text-rose-400">
               {formatCurrency(totalExpense)}
             </span>
           </div>
 
           <div className="p-2.5 rounded-xl bg-obsidian-900/80 border border-white/5">
-            <span className="text-[10px] font-mono text-slate-400 block">ยอดคงเหลือสุทธิ</span>
+            <span className="text-xs text-slate-400 block">ยอดคงเหลือสุทธิ</span>
             <span className="text-sm font-bold font-mono text-amber-300">
               {formatCurrency(netBalance)}
             </span>

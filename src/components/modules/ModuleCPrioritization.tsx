@@ -73,24 +73,24 @@ export const ModuleCPrioritization: React.FC = () => {
 
         {/* Quick Presets */}
         <div className="mt-3 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-[11px] font-mono text-slate-500 flex-shrink-0">
+          <span className="text-xs text-slate-400 flex-shrink-0">
             ชุดค่าตัวอย่าง:
           </span>
           <button
             onClick={() => handleApplyPreset({ u: 5, b: 1420, f: 4.8, e: 4.5, c: 30000 })}
-            className="px-2.5 py-1 rounded-lg text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 whitespace-nowrap"
+            className="px-2.5 py-1 rounded-lg text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 whitespace-nowrap"
           >
             จุดพักคลายร้อน
           </button>
           <button
             onClick={() => handleApplyPreset({ u: 4, b: 950, f: 4.2, e: 4.0, c: 45000 })}
-            className="px-2.5 py-1 rounded-lg text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 whitespace-nowrap"
+            className="px-2.5 py-1 rounded-lg text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 whitespace-nowrap"
           >
             สถานีคัดแยกขยะ
           </button>
           <button
             onClick={() => handleApplyPreset({ u: 4, b: 1200, f: 3.8, e: 3.9, c: 60000 })}
-            className="px-2.5 py-1 rounded-lg text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 whitespace-nowrap"
+            className="px-2.5 py-1 rounded-lg text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 whitespace-nowrap"
           >
             แนวระบายน้ำซึม
           </button>
@@ -193,7 +193,7 @@ export const ModuleCPrioritization: React.FC = () => {
       <div className="mt-5 pt-3 border-t border-white/10">
         <div className="p-3.5 rounded-2xl bg-obsidian-900/90 border border-white/10 flex items-center justify-between">
           <div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase block">คะแนนความคุ้มค่าและความเร่งด่วน</span>
+            <span className="text-xs text-slate-400 block">คะแนนความคุ้มค่าและความเร่งด่วน</span>
             <span className="text-2xl sm:text-3xl font-black font-mono text-white">
               {priorityScore.toFixed(1)} <span className="text-xs text-slate-400 font-normal">pts</span>
             </span>

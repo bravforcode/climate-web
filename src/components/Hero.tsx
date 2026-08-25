@@ -82,7 +82,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* Readiness Tag */}
         <div 
           ref={badgeRef}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-climate-950/80 border border-climate-500/30 text-climate-300 text-xs font-mono mb-6 shadow-glow-emerald backdrop-blur-md"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-obsidian-900/90 border border-climate-500/30 text-climate-300 text-xs font-mono mb-6 shadow-subtle-emerald backdrop-blur-md"
         >
           <Radio className="w-3.5 h-3.5 text-climate-400 animate-pulse" />
           <span>เตรียมพร้อมรองรับกลไกกองทุนภายใต้ ร่าง พ.ร.บ. การเปลี่ยนแปลงสภาพภูมิอากาศ</span>
@@ -96,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({
           className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15] max-w-4xl text-balance"
         >
           Climate Action OS — <br className="hidden sm:inline" />
-          <span className="bg-gradient-to-r from-climate-300 via-teal-200 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-climate-300 via-teal-200 to-cyan-300 bg-clip-text text-transparent">
             ชุมชนพร้อมรับมือก่อนวิกฤต
           </span>
         </h1>
@@ -116,7 +116,7 @@ export const Hero: React.FC<HeroProps> = ({
         >
           <button
             onClick={onExploreClick}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-climate-500 hover:bg-climate-400 text-obsidian-950 font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] shadow-glow-emerald active:scale-[0.98]"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-climate-500 hover:bg-climate-400 text-obsidian-950 font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] shadow-subtle-emerald active:scale-[0.98]"
           >
             <span>สำรวจระบบปฏิบัติการ (Explore OS)</span>
             <ArrowRight className="w-4 h-4 text-obsidian-950 stroke-[2.5]" />
@@ -125,10 +125,10 @@ export const Hero: React.FC<HeroProps> = ({
           {onOpenLineLogin && (
             <button
               onClick={onOpenLineLogin}
-              className={`w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all border transform hover:scale-[1.02] active:scale-[0.98] ${
+              className={`w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all border transform hover:scale-[1.01] active:scale-[0.98] ${
                 lineUser 
-                  ? 'bg-[#06C755]/20 border-[#06C755]/50 text-[#34d399] shadow-glow-emerald hover:bg-[#06C755]/30' 
-                  : 'bg-[#06C755] hover:bg-[#05b34c] text-obsidian-950 border-transparent shadow-md shadow-[#06C755]/30'
+                  ? 'bg-[#06C755]/15 border-[#06C755]/40 text-[#34d399] hover:bg-[#06C755]/25' 
+                  : 'bg-[#06C755] hover:bg-[#05b34c] text-obsidian-950 border-transparent shadow-sm'
               }`}
             >
               <MessageSquare className={`w-4 h-4 ${lineUser ? 'fill-[#06C755] text-[#06C755]' : 'fill-obsidian-950 text-obsidian-950'}`} />

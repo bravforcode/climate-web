@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
+import { 
+  Compass, 
+  Layers, 
+  ShieldCheck, 
+  ArrowRight, 
+  Coins, 
+  Sparkles, 
+  CheckCircle2,
+  FileText
+} from 'lucide-react';
 import { UserRole, Intervention } from '../types';
 import { MOCK_INTERVENTIONS } from '../data/mockData';
+import { WorkspaceStage } from './Navbar';
 import { ModuleARiskIntelligence } from './modules/ModuleARiskIntelligence';
 import { ModuleBVulnerabilityMap } from './modules/ModuleBVulnerabilityMap';
 import { ModuleCPrioritization } from './modules/ModuleCPrioritization';
@@ -9,19 +20,24 @@ import { ModuleEProjectComposer } from './modules/ModuleEProjectComposer';
 import { ModuleFFundingMatch } from './modules/ModuleFFundingMatch';
 import { ModuleGHTaskEvidence } from './modules/ModuleGHTaskEvidence';
 import { ModuleILedger } from './modules/ModuleILedger';
-import { ModulePaymentBilling } from './modules/ModulePaymentBilling';
 
 interface BentoGridProps {
   currentRole: UserRole;
+  activeWorkspace: WorkspaceStage;
+  onSelectWorkspace: (stage: WorkspaceStage) => void;
   isOnline: boolean;
   onOpenProposalModal: () => void;
+  onOpenSponsorModal?: () => void;
   onSyncComplete?: () => void;
 }
 
 export const BentoGrid: React.FC<BentoGridProps> = ({
   currentRole,
+  activeWorkspace,
+  onSelectWorkspace,
   isOnline,
   onOpenProposalModal,
+  onOpenSponsorModal,
   onSyncComplete,
 }) => {
   const [selectedInterventions, setSelectedInterventions] = useState<Intervention[]>([
@@ -39,80 +55,215 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
     });
   };
 
+  const workspaces: { id: WorkspaceStage; title: string; subtitle: string; icon: React.ComponentType<{ className?: string }> }[] = [
+    {
+      id: 'assess',
+      title: '1. สำรวจ & วางแผน (Assess & Plan)',
+      subtitle: 'ประเมินความเสี่ยงสภาพภูมิอากาศ (A), คุ้มครองข้อมูลเปราะบาง k≥10 (B), และจัดลำดับมาตรการความคุ้มค่า (C-D)',
+      icon: Compass,
+    },
+    {
+      id: 'compose',
+      title: '2. ร่างโครงการ & ทุน (Compose & Match)',
+      subtitle: 'ร่างข้อเสนอโครงการพร้อม Theory of Change (E) และเทียบเคียงกรอบทุนที่ผ่านการตรวจรับรอง (F)',
+      icon: Layers,
+    },
+    {
+      id: 'mrv',
+      title: '3. ปฏิบัติการ & บัญชี (MRV & Ledger)',
+      subtitle: 'บันทึกตั๋วชั่งน้ำหนักขยะและพิกัดพร้อม SHA-256 (G-H) และบันทึกบัญชีแยกประเภทแบบห้ามแก้ไข (I)',
+      icon: ShieldCheck,
+    },
+  ];
+
+  const currentWorkspaceMeta = workspaces.find((w) => w.id === activeWorkspace) || workspaces[0];
+
   return (
-    <section id="risk-module" className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="risk-module" className="py-8 md:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       
-      {/* Section Header */}
-      <div className="mb-10 text-center max-w-3xl mx-auto">
-        <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-          โมดูลปฏิบัติการเปลี่ยนความเสี่ยงเป็นผลลัพธ์
-        </h2>
-        <p className="mt-3 text-sm sm:text-base text-slate-300">
-          สถาปัตยกรรมแบบบูรณาการตั้งแต่การประเมินภัยพิบัติ (A) คุ้มครองข้อมูลเปราะบาง (B) จัดลำดับความคุ้มค่า (C) ร่างโครงการพร้อมตรวจสอบ (E) เทียบเคียงแหล่งทุน (F) ไปจนถึงเก็บหลักฐาน MRV และปิดบัญชีโปร่งใส (G-I) พร้อมกลไกการร่วมสมทบทุนลดหย่อนภาษี 2 เท่า (J)
-        </p>
+      {/* Workspace Stage Selector Navigation */}
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
+          <div>
+            <span className="text-xs font-mono text-climate-400 font-bold uppercase tracking-wider block">
+              WORKFLOW WORKSPACES · กระบวนการทำงานแบบบูรณาการ
+            </span>
+            <h2 className="text-xl sm:text-3xl font-black text-white mt-1">
+              {currentWorkspaceMeta.title}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+              {currentWorkspaceMeta.subtitle}
+            </p>
+          </div>
+
+          {/* Quick Stage Tabs */}
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-obsidian-900 border border-white/10 w-full sm:w-auto overflow-x-auto scrollbar-none">
+            {workspaces.map((ws) => {
+              const Icon = ws.icon;
+              const isActive = activeWorkspace === ws.id;
+              return (
+                <button
+                  key={ws.id}
+                  onClick={() => onSelectWorkspace(ws.id)}
+                  className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
+                    isActive
+                      ? 'bg-climate-500 text-obsidian-950 shadow-subtle-emerald font-bold'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 flex-shrink-0" />
+                  <span>{ws.id === 'assess' ? '1. สำรวจ & วางแผน' : ws.id === 'compose' ? '2. ร่างโครงการ & ทุน' : '3. ปฏิบัติการ & บัญชี'}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      {/* Gapless Bento Grid with grid-auto-flow: dense */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 auto-rows-fr">
+      {/* Active Workspace Viewport (Progressive Disclosure) */}
+      <div className="transition-all duration-300">
         
-        {/* Module A: Risk Intelligence (6 cols) */}
-        <div className="lg:col-span-6 min-h-[460px]">
-          <ModuleARiskIntelligence currentRole={currentRole} isOnline={isOnline} />
-        </div>
+        {/* Workspace 1: Assess & Plan */}
+        {activeWorkspace === 'assess' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              {/* Module A: Risk Intelligence (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleARiskIntelligence currentRole={currentRole} isOnline={isOnline} />
+              </div>
 
-        {/* Module B: Vulnerability Map (6 cols) */}
-        <div className="lg:col-span-6 min-h-[460px]">
-          <ModuleBVulnerabilityMap currentRole={currentRole} />
-        </div>
+              {/* Module B: Vulnerability Map (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleBVulnerabilityMap currentRole={currentRole} />
+              </div>
+            </div>
 
-        {/* Module C: Prioritization Matrix (6 cols) */}
-        <div className="lg:col-span-6 min-h-[490px]">
-          <ModuleCPrioritization />
-        </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              {/* Module C: Prioritization Matrix (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleCPrioritization />
+              </div>
 
-        {/* Module D: Intervention Catalog (6 cols) */}
-        <div className="lg:col-span-6 min-h-[490px]">
-          <ModuleDInterventions
-            selectedInterventions={selectedInterventions}
-            onToggleIntervention={handleToggleIntervention}
-          />
-        </div>
+              {/* Module D: Intervention Catalog (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleDInterventions
+                  selectedInterventions={selectedInterventions}
+                  onToggleIntervention={handleToggleIntervention}
+                />
+              </div>
+            </div>
 
-        {/* Module E: Project Composer (6 cols) */}
-        <div className="lg:col-span-6 min-h-[520px]">
-          <ModuleEProjectComposer
-            selectedInterventions={selectedInterventions}
-            currentRole={currentRole}
-            onOpenProposalModal={onOpenProposalModal}
-          />
-        </div>
+            {/* Stage Completion Footer Banner */}
+            <div className="p-4 rounded-2xl glass-panel border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2 text-slate-300">
+                <CheckCircle2 className="w-4 h-4 text-climate-400 flex-shrink-0" />
+                <span>เลือกมาตรการแล้ว <strong>{selectedInterventions.length} รายการ</strong> พร้อมสำหรับร่างโครงการ</span>
+              </div>
+              <button
+                onClick={() => onSelectWorkspace('compose')}
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-climate-500/20 hover:bg-climate-500/30 text-climate-300 border border-climate-500/40 font-semibold flex items-center justify-center gap-1.5 transition-all"
+              >
+                <span>ไปยังขั้นตอนถัดไป: ร่างโครงการ & เทียบเคียงทุน</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
 
-        {/* Module F: Funding Match (6 cols) */}
-        <div className="lg:col-span-6 min-h-[520px]">
-          <ModuleFFundingMatch currentRole={currentRole} />
-        </div>
+        {/* Workspace 2: Compose & Match */}
+        {activeWorkspace === 'compose' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              {/* Module E: Project Composer (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleEProjectComposer
+                  selectedInterventions={selectedInterventions}
+                  currentRole={currentRole}
+                  onOpenProposalModal={onOpenProposalModal}
+                />
+              </div>
 
-        {/* Module G & H: Task Board & MRV Crypto Evidence (6 cols) */}
-        <div className="lg:col-span-6 min-h-[540px]">
-          <ModuleGHTaskEvidence
-            currentRole={currentRole}
-            isOnline={isOnline}
-            onSyncComplete={onSyncComplete}
-          />
-        </div>
+              {/* Module F: Funding Match (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleFFundingMatch currentRole={currentRole} />
+              </div>
+            </div>
 
-        {/* Module I: Append-Only Financial Ledger (6 cols) */}
-        <div className="lg:col-span-6 min-h-[540px]">
-          <ModuleILedger currentRole={currentRole} />
-        </div>
+            {/* Stage Completion Footer Banner */}
+            <div className="p-4 rounded-2xl glass-panel border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2 text-slate-300">
+                <FileText className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                <span>ร่างข้อเสนอโครงการเสร็จสมบูรณ์ พร้อมส่งให้ผู้แทนกองทุนพิจารณา</span>
+              </div>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <button
+                  onClick={onOpenProposalModal}
+                  className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 font-medium transition-all"
+                >
+                  ดูเอกสารข้อเสนอ (PDF/MD)
+                </button>
+                <button
+                  onClick={() => onSelectWorkspace('mrv')}
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-climate-500/20 hover:bg-climate-500/30 text-climate-300 border border-climate-500/40 font-semibold flex items-center justify-center gap-1.5 transition-all"
+                >
+                  <span>ไปยังขั้นตอน: ปฏิบัติการ & บันทึกหลักฐาน</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
-        {/* Module J: Pricing & Climate Fund Sponsorship (12 cols) */}
-        <div className="lg:col-span-12 min-h-[560px]">
-          <ModulePaymentBilling currentRole={currentRole} />
-        </div>
+        {/* Workspace 3: MRV & Ledger */}
+        {activeWorkspace === 'mrv' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              {/* Module G & H: Task Board & MRV Crypto Evidence (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleGHTaskEvidence
+                  currentRole={currentRole}
+                  isOnline={isOnline}
+                  onSyncComplete={onSyncComplete}
+                />
+              </div>
+
+              {/* Module I: Append-Only Financial Ledger (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col">
+                <ModuleILedger currentRole={currentRole} />
+              </div>
+            </div>
+
+            {/* CSR Sponsorship Banner */}
+            {onOpenSponsorModal && (
+              <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-obsidian-900 to-obsidian-900 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 flex-shrink-0">
+                    <Coins className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">ต้องการร่วมสมทบทุนขยายผลโครงการ?</h4>
+                    <p className="text-slate-300 text-[11px] mt-0.5">
+                      ภาคเอกชนสามารถร่วมสนับสนุนโครงการปรับตัวสภาพภูมิอากาศชุมชน เพื่อรับสิทธิประโยชน์ลดหย่อนภาษี 2 เท่า พร้อมใบเสร็จดิจิทัล
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={onOpenSponsorModal}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-obsidian-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-subtle-emerald flex-shrink-0"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>เปิดระบบร่วมสมทบทุน (CSR 2x)</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
       </div>
 
     </section>
   );
 };
+
+export default BentoGrid;
+

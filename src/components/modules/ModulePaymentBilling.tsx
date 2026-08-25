@@ -45,12 +45,18 @@ import db from '../../services/db';
 interface ModulePaymentBillingProps {
   currentRole?: UserRole;
   defaultProjectId?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
   currentRole = 'funder',
   defaultProjectId = 'proj-pilot-market-01',
+  isOpen,
+  onClose,
 }) => {
+  // Return null if rendered as controlled modal and not open
+  if (isOpen !== undefined && !isOpen) return null;
   // Tier selection states
   const [selectedTierId, setSelectedTierId] = useState<PaymentTierId>('climate_resilience_anchor');
   const [billingIntervalFilter, setBillingIntervalFilter] = useState<'all' | 'month' | 'one_time'>('all');
@@ -196,8 +202,10 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
     return tier.interval === billingIntervalFilter;
   });
 
-  return (
-    <div className="glass-panel rounded-3xl p-5 sm:p-7 border border-emerald-500/20 shadow-2xl relative overflow-hidden bg-gradient-to-b from-obsidian-900/90 via-obsidian-950/95 to-obsidian-950">
+  const content = (
+    <div className={`glass-panel rounded-3xl p-5 sm:p-7 border border-emerald-500/20 shadow-2xl relative overflow-hidden bg-gradient-to-b from-obsidian-900/90 via-obsidian-950/95 to-obsidian-950 ${
+      isOpen ? 'w-full max-w-5xl max-h-[90vh] overflow-y-auto' : ''
+    }`}>
       
       {/* Background ambient lighting */}
       <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -220,12 +228,21 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
           </p>
         </div>
 
-        {/* Ledger Sync Status Pill */}
+        {/* Ledger Sync Status Pill & Modal Close */}
         <div className="flex items-center gap-2 self-start sm:self-center">
           <div className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center gap-2 text-xs font-mono">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>Stripe + Ledger Live ({ledgerSyncCount} Syncs)</span>
           </div>
+          {isOpen && onClose && (
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors"
+              title="ปิดหน้าต่าง"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -908,6 +925,16 @@ export const ModulePaymentBilling: React.FC<ModulePaymentBillingProps> = ({
 
     </div>
   );
+
+  if (isOpen) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-obsidian-950/85 backdrop-blur-xl animate-in fade-in duration-200">
+        {content}
+      </div>
+    );
+  }
+
+  return content;
 };
 
 export default ModulePaymentBilling;

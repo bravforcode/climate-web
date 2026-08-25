@@ -1,29 +1,38 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   ShieldCheck, 
   Activity, 
   Wifi, 
   WifiOff, 
   ChevronDown, 
-  UserCheck, 
   Layers, 
   FileText, 
   Radio, 
   Server,
   Coins,
   MessageSquare,
-  Sparkles
+  Shield,
+  Lock,
+  Database,
+  X,
+  Compass,
+  ArrowRight
 } from 'lucide-react';
 import { UserRole, LineUserProfile } from '../types';
 import { ROLE_CONFIGS } from '../data/mockData';
 
+export type WorkspaceStage = 'assess' | 'compose' | 'mrv';
+
 interface NavbarProps {
   currentRole: UserRole;
   onSelectRole: (role: UserRole) => void;
+  activeWorkspace: WorkspaceStage;
+  onSelectWorkspace: (stage: WorkspaceStage) => void;
   isOnline: boolean;
   onToggleOnline: () => void;
   offlineQueueCount: number;
   onOpenProposalModal: () => void;
+  onOpenSponsorModal?: () => void;
   lineUser?: LineUserProfile | null;
   onOpenLineLoginModal?: () => void;
 }
@@ -31,16 +40,39 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   currentRole,
   onSelectRole,
+  activeWorkspace,
+  onSelectWorkspace,
   isOnline,
   onToggleOnline,
   offlineQueueCount,
   onOpenProposalModal,
+  onOpenSponsorModal,
   lineUser,
   onOpenLineLoginModal,
 }) => {
-  const [roleDropdownOpen, setRoleDropdownOpen] = React.useState(false);
-  const [healthModalOpen, setHealthModalOpen] = React.useState(false);
+  const [profilePopoverOpen, setProfilePopoverOpen] = useState(false);
+  const [healthModalOpen, setHealthModalOpen] = useState(false);
+  const popoverRef = useRef<HTMLDivElement>(null);
+
   const currentConfig = ROLE_CONFIGS[currentRole];
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+        setProfilePopoverOpen(false);
+      }
+    };
+    if (profilePopoverOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profilePopoverOpen]);
+
+  const stages: { id: WorkspaceStage; labelTh: string; labelEn: string; icon: React.ComponentType<{ className?: string }> }[] = [
+    { id: 'assess', labelTh: '1. สำรวจ & วางแผน', labelEn: 'Assess', icon: Compass },
+    { id: 'compose', labelTh: '2. ร่างโครงการ & ทุน', labelEn: 'Compose', icon: Layers },
+    { id: 'mrv', labelTh: '3. ปฏิบัติการ & บัญชี', labelEn: 'MRV & Ledger', icon: ShieldCheck },
+  ];
 
   return (
     <header className="sticky top-4 z-50 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -71,24 +103,26 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Quick Nav Links */}
-        <nav className="hidden lg:flex items-center gap-6 text-xs font-medium text-slate-300">
-          <a href="#risk-module" className="hover:text-climate-400 transition-colors flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-climate-400" />
-            <span>โมดูลปฏิบัติการ</span>
-          </a>
-          <a href="#prioritization" className="hover:text-climate-400 transition-colors flex items-center gap-1.5">
-            <Activity className="w-3.5 h-3.5 text-cyan-400" />
-            <span>สูตรจัดลำดับ (P_i)</span>
-          </a>
-          <a href="#payment-billing-module" className="hover:text-climate-400 transition-colors flex items-center gap-1.5">
-            <Coins className="w-3.5 h-3.5 text-amber-400" />
-            <span>ร่วมสมทบทุน (ลดหย่อนภาษี 2x)</span>
-          </a>
-          <a href="#telemetry" className="hover:text-climate-400 transition-colors flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
-            <span>MRV สด & บัญชี</span>
-          </a>
+        {/* 3-Stage Workspace Switcher (Progressive Disclosure) */}
+        <nav className="hidden md:flex items-center p-1 rounded-xl bg-obsidian-950/80 border border-white/5 text-xs">
+          {stages.map((stage) => {
+            const Icon = stage.icon;
+            const isActive = activeWorkspace === stage.id;
+            return (
+              <button
+                key={stage.id}
+                onClick={() => onSelectWorkspace(stage.id)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all ${
+                  isActive
+                    ? 'bg-climate-500/20 text-climate-300 border border-climate-500/40 shadow-subtle-emerald font-semibold'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-climate-400' : 'text-slate-400'}`} />
+                <span>{stage.labelTh}</span>
+              </button>
+            );
+          })}
         </nav>
 
         {/* Action Controls & Role Switcher */}
@@ -123,99 +157,157 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {/* System Health Dropdown / Modal trigger */}
-          <button
-            onClick={() => setHealthModalOpen(!healthModalOpen)}
-            className="p-1.5 rounded-lg bg-obsidian-850 hover:bg-obsidian-800 border border-white/10 text-slate-300 hover:text-white transition-colors"
-            title="ตรวจสอบสถานะ Data Source API & System Health"
-          >
-            <Server className="w-4 h-4 text-cyan-400" />
-          </button>
+          {/* CSR Sponsorship Trigger */}
+          {onOpenSponsorModal && (
+            <button
+              onClick={onOpenSponsorModal}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35 text-amber-300 text-xs font-semibold transition-all min-h-[36px] active:scale-95"
+              title="ร่วมสมทบทุนโครงการปรับตัวสภาพภูมิอากาศชุมชน (ลดหย่อนภาษี 2 เท่า)"
+            >
+              <Coins className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden sm:inline">สมทบทุน 2x</span>
+            </button>
+          )}
 
           {/* Proposal Preview Action */}
           <button
             onClick={onOpenProposalModal}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-climate-500/10 hover:bg-climate-500/20 border border-climate-500/30 text-climate-300 text-xs font-medium transition-all"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-medium transition-all min-h-[36px]"
           >
-            <FileText className="w-3.5 h-3.5" />
+            <FileText className="w-3.5 h-3.5 text-climate-400" />
             <span>ข้อเสนอโครงการ</span>
           </button>
 
-          {/* LINE Login / Profile Trigger Button */}
-          {onOpenLineLoginModal && (
+          {/* Unified Profile & Role Popover Trigger */}
+          <div className="relative" ref={popoverRef}>
             <button
-              onClick={onOpenLineLoginModal}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all active:scale-95 flex-shrink-0 ${
-                lineUser 
-                  ? 'bg-[#06C755]/20 border border-[#06C755]/50 text-[#34d399] shadow-glow-emerald hover:bg-[#06C755]/30' 
-                  : 'bg-[#06C755] hover:bg-[#05b34c] text-obsidian-950 font-bold shadow-md shadow-[#06C755]/25'
+              onClick={() => setProfilePopoverOpen(!profilePopoverOpen)}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all min-h-[36px] ${
+                profilePopoverOpen 
+                  ? 'bg-obsidian-800 border-climate-500/50 text-white'
+                  : 'bg-obsidian-900/90 border-white/10 text-slate-200 hover:bg-obsidian-850 hover:border-white/20'
               }`}
-              title={lineUser ? `เข้าสู่ระบบในชื่อ LINE: ${lineUser.displayName}` : 'เข้าสู่ระบบด้วย LINE (LINE Login)'}
             >
-              <MessageSquare className={`w-3.5 h-3.5 ${lineUser ? 'fill-[#06C755] text-[#06C755]' : 'fill-obsidian-950 text-obsidian-950'}`} />
-              <span className="max-w-[80px] sm:max-w-[100px] truncate">
-                {lineUser ? lineUser.displayName.split(' ')[0] : 'LINE Login'}
-              </span>
-              {lineUser && (
-                <span className="w-2 h-2 rounded-full bg-[#06C755] animate-pulse ml-0.5" />
-              )}
-            </button>
-          )}
-
-          {/* Role Switcher Button */}
-          <div className="relative">
-            <button
-              onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-              className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-xs font-medium transition-all ${currentConfig.badgeColor}`}
-            >
-              <UserCheck className="w-3.5 h-3.5" />
-              <span className="font-semibold max-w-[90px] sm:max-w-[120px] truncate">
-                {currentConfig.titleTh.split(' ')[0]}
-              </span>
-              <ChevronDown className="w-3 h-3 opacity-70" />
+              <div className="flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full ${
+                  currentRole === 'community_member' ? 'bg-emerald-400' :
+                  currentRole === 'operator' ? 'bg-cyan-400' :
+                  currentRole === 'local_officer' ? 'bg-blue-400' :
+                  currentRole === 'funder' ? 'bg-purple-400' :
+                  currentRole === 'admin' ? 'bg-amber-400' : 'bg-rose-400'
+                }`} />
+                <span className="font-semibold">{currentConfig.titleTh.split(' ')[0]}</span>
+              </div>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${profilePopoverOpen ? 'rotate-180 text-climate-400' : ''}`} />
             </button>
 
-            {/* Dropdown Menu */}
-            {roleDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-72 sm:w-80 rounded-2xl glass-panel p-2 shadow-2xl z-50 border border-white/15 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-3 py-2 border-b border-white/10 text-[11px] font-mono text-slate-400 uppercase tracking-wider flex items-center justify-between">
-                  <span>สลับบทบาทผู้ใช้ (RLS Context)</span>
-                  {lineUser && (
-                    <span className="text-[10px] text-[#34d399] font-mono flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#06C755]" />
-                      LINE LINKED
-                    </span>
+            {/* Unified Role Context & Identity Popover */}
+            {profilePopoverOpen && (
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-obsidian-900 border border-white/15 shadow-2xl p-4 text-left z-50 animate-in fade-in duration-150">
+                
+                {/* Popover Header with Current Identity */}
+                <div className="pb-3 border-b border-white/10 flex items-start justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`p-2 rounded-xl border ${currentConfig.badgeColor}`}>
+                      <Shield className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono text-slate-400 uppercase block">ACTIVE ROLE</span>
+                      <h4 className="text-xs font-bold text-white leading-tight">{currentConfig.titleTh}</h4>
+                      <p className="text-[11px] text-slate-400">{currentConfig.titleEn}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setProfilePopoverOpen(false)}
+                    className="p-1 rounded-lg text-slate-400 hover:text-white"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* LINE Account Link Status */}
+                <div className="mt-3 p-2.5 rounded-xl bg-obsidian-950 border border-white/5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4 text-[#06C755]" />
+                    <div className="text-xs">
+                      <span className="text-slate-400 block text-[10px] font-mono">LINE IDENTITY</span>
+                      <span className="text-white font-medium">
+                        {lineUser ? lineUser.displayName : 'ยังไม่ได้เชื่อมต่อ'}
+                      </span>
+                    </div>
+                  </div>
+                  {onOpenLineLoginModal && (
+                    <button
+                      onClick={() => {
+                        setProfilePopoverOpen(false);
+                        onOpenLineLoginModal();
+                      }}
+                      className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#06C755]/15 text-[#34d399] hover:bg-[#06C755]/25 border border-[#06C755]/30 transition-colors"
+                    >
+                      {lineUser ? 'สลับบัญชี' : 'เชื่อมต่อ LINE'}
+                    </button>
                   )}
                 </div>
-                <div className="py-1 space-y-1">
-                  {(Object.keys(ROLE_CONFIGS) as UserRole[]).map((roleKey) => {
-                    const r = ROLE_CONFIGS[roleKey];
-                    const isSelected = currentRole === roleKey;
-                    return (
-                      <button
-                        key={roleKey}
-                        onClick={() => {
-                          onSelectRole(roleKey);
-                          setRoleDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex flex-col gap-0.5 ${
-                          isSelected
-                            ? 'bg-climate-500/20 text-climate-300 border border-climate-500/30'
-                            : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold">{r.titleTh}</span>
-                          <span className="text-[10px] font-mono opacity-70 uppercase">
-                            {r.privilegeLevel}
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-slate-400 line-clamp-1">
-                          {r.descriptionTh}
-                        </span>
-                      </button>
-                    );
-                  })}
+
+                {/* Quick Role Switcher Grid */}
+                <div className="mt-3.5">
+                  <label className="text-[10px] font-mono text-slate-400 uppercase block mb-1.5">
+                    สลับบทบาทการใช้งาน (Switch Role):
+                  </label>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {(Object.keys(ROLE_CONFIGS) as UserRole[]).map((rKey) => {
+                      const r = ROLE_CONFIGS[rKey];
+                      const isCur = currentRole === rKey;
+                      return (
+                        <button
+                          key={rKey}
+                          onClick={() => {
+                            onSelectRole(rKey);
+                            setProfilePopoverOpen(false);
+                          }}
+                          className={`p-2 rounded-xl text-xs text-left transition-all border ${
+                            isCur
+                              ? 'bg-climate-500/20 border-climate-500/50 text-climate-300 font-bold'
+                              : 'bg-obsidian-950/80 border-white/5 text-slate-300 hover:bg-obsidian-850 hover:border-white/15'
+                          }`}
+                        >
+                          <span className="block truncate">{r.titleTh.split(' ')[0]}</span>
+                          <span className="text-[10px] font-mono text-slate-400 block truncate">{r.titleEn.split(' ')[0]}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
+
+                {/* Active RLS Rules Summary */}
+                <div className="mt-3.5 pt-3 border-t border-white/10 space-y-1.5 text-[11px]">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase block">สิทธิ์การเข้าถึงข้อมูล (RLS Policies):</span>
+                  <div className="p-2 rounded-lg bg-obsidian-950/90 text-slate-300 space-y-1 text-[11px]">
+                    <div className="flex items-center gap-1.5 text-slate-300">
+                      <Lock className="w-3 h-3 text-cyan-400 flex-shrink-0" />
+                      <span>{currentConfig.rlsConstraints.vulnerability}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-slate-300">
+                      <Database className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                      <span>{currentConfig.rlsConstraints.ledger}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* System Diagnostics Trigger */}
+                <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                  <button
+                    onClick={() => {
+                      setProfilePopoverOpen(false);
+                      setHealthModalOpen(true);
+                    }}
+                    className="flex items-center gap-1.5 text-slate-400 hover:text-cyan-300 transition-colors"
+                  >
+                    <Server className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>ตรวจสอบสถานะ API & Server</span>
+                  </button>
+                </div>
+
               </div>
             )}
           </div>
@@ -224,62 +316,61 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       </div>
 
-      {/* System Health Diagnostics Popup */}
+      {/* System Health Diagnostic Modal */}
       {healthModalOpen && (
-        <div className="absolute right-4 mt-2 w-80 sm:w-96 rounded-2xl glass-panel p-4 shadow-2xl border border-cyan-500/20 z-50">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <Server className="w-4 h-4 text-cyan-400" />
-              <span className="text-xs font-bold text-white font-mono">SYSTEM HEALTH & DATA INGESTION</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/80 backdrop-blur-md">
+          <div className="glass-panel w-full max-w-md rounded-2xl p-5 border border-white/15 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Server className="w-4 h-4 text-cyan-400" />
+                <h3 className="text-sm font-bold text-white">System Ingestion & Health</h3>
+              </div>
+              <button 
+                onClick={() => setHealthModalOpen(false)}
+                className="p-1 text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <button 
+
+            <div className="mt-4 space-y-2 text-xs">
+              <div className="p-2.5 rounded-xl bg-obsidian-950 border border-white/5 flex items-center justify-between">
+                <div>
+                  <span className="font-semibold text-white block">GISTDA Inundation Radar</span>
+                  <span className="text-slate-400 text-[11px]">Sentinel-1 SAR API Stream</span>
+                </div>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  ONLINE (200 OK)
+                </span>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-obsidian-950 border border-white/5 flex items-center justify-between">
+                <div>
+                  <span className="font-semibold text-white block">TMD Heat Index Feed</span>
+                  <span className="text-slate-400 text-[11px]">Station #48455 (BMA Station)</span>
+                </div>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  ONLINE (200 OK)
+                </span>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-obsidian-950 border border-white/5 flex items-center justify-between">
+                <div>
+                  <span className="font-semibold text-white block">Immutable MRV Ledger</span>
+                  <span className="text-slate-400 text-[11px]">In-Memory Reactive DB</span>
+                </div>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  VERIFIED
+                </span>
+              </div>
+            </div>
+
+            <button
               onClick={() => setHealthModalOpen(false)}
-              className="text-xs text-slate-400 hover:text-white"
+              className="mt-5 w-full py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-medium text-xs transition-colors"
             >
-              ✕
+              ปิดหน้าต่าง
             </button>
-          </div>
-          
-          <div className="mt-3 space-y-2.5 text-xs">
-            <div className="flex items-center justify-between p-2 rounded-lg bg-obsidian-900 border border-white/5">
-              <div>
-                <p className="font-medium text-slate-200">GISTDA Flood API (Disaster)</p>
-                <p className="text-[10px] text-slate-400 font-mono">Sync: 06:00 Daily Cron · 200 OK</p>
-              </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                ACTIVE
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-2 rounded-lg bg-obsidian-900 border border-white/5">
-              <div>
-                <p className="font-medium text-slate-200">TMD TMDAPI (กรมอุตุนิยมวิทยา)</p>
-                <p className="text-[10px] text-slate-400 font-mono">Attribution Required · License Checked</p>
-              </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                CONNECTED
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-2 rounded-lg bg-obsidian-900 border border-white/5">
-              <div>
-                <p className="font-medium text-slate-200">Supabase PostGIS & RLS Engine</p>
-                <p className="text-[10px] text-slate-400 font-mono">Spatial Indexing · Append-only Triggers</p>
-              </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                HEALTHY
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-2 rounded-lg bg-obsidian-900 border border-white/5">
-              <div>
-                <p className="font-medium text-slate-200">k-Anonymity Privacy Engine</p>
-                <p className="text-[10px] text-slate-400 font-mono">Threshold k ≥ 10 Suppression Active</p>
-              </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                ENFORCED
-              </span>
-            </div>
           </div>
         </div>
       )}

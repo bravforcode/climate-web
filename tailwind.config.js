@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Satoshi', 'Geist', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        sans: ['Geist', '"Noto Sans Thai"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
         mono: ['"Geist Mono"', '"JetBrains Mono"', 'monospace'],
       },
       colors: {
@@ -26,12 +26,12 @@ export default {
           950: '#022c22',
         },
         obsidian: {
-          950: '#06090e',
-          900: '#0a0f18',
-          850: '#0e1622',
-          800: '#131e2e',
-          750: '#19273c',
-          700: '#1f314a',
+          950: '#080c14',
+          900: '#0e1624',
+          850: '#152033',
+          800: '#1c2b42',
+          750: '#233652',
+          700: '#2b4162',
         },
         telemetry: {
           cyan: '#06b6d4',
@@ -42,11 +42,11 @@ export default {
         }
       },
       boxShadow: {
-        'glow-emerald': '0 0 25px -5px rgba(16, 185, 129, 0.3)',
-        'glow-teal': '0 0 25px -5px rgba(20, 184, 166, 0.3)',
-        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.3)',
-        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.4)',
-        'inner-glow': 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.1)',
+        'subtle-emerald': '0 4px 20px -2px rgba(16, 185, 129, 0.12)',
+        'subtle-cyan': '0 4px 20px -2px rgba(6, 182, 212, 0.12)',
+        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.35)',
+        'glass-elevation': '0 12px 40px -8px rgba(0, 0, 0, 0.5)',
+        'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08)',
       },
       animation: {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
